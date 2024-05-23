@@ -7,6 +7,9 @@ import Navbar from './components/navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './pages/home';
 import Login from './pages/login';
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
+import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+
 class App extends React.Component {
 
   render() {
