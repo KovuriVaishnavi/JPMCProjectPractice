@@ -16,8 +16,9 @@ export default function Home() {
   return (
     <>
     <div >
-    <Navbar></Navbar>
-    <Carousel></Carousel>
+   <div> <Navbar></Navbar></div>
+    <div><Carousel></Carousel></div>
+    <div>
     <div className="grid-container">
             {recipes.map((recipe) => (
                 <div key={recipe.id} className="grid-item">
@@ -25,7 +26,8 @@ export default function Home() {
                 </div>
             ))}
         </div>
-    
+        </div>
+
     </div>
     </>
   )
