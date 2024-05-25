@@ -7,13 +7,13 @@ function ShowRecipe() {
   const { id } = useParams();
 
   
-  useEffect(() => {
-         fetch(`http://localhost:3002/recipes/1`)
+  useEffect(async() => {
+        await fetch(`http://localhost:3001/api/recipes/search/id/${id}`)
          .then(res=>res.json())
          .then(data=>setRecipe(data))
          localStorage.setItem("recipe",recipe)
          console.log(recipe)
-},[recipe])
+},[])
 
   // const recipe={
   //   "id": "1",
@@ -44,7 +44,7 @@ function ShowRecipe() {
     {/* <h1>{recipe.instructions}</h1>
     <h1>{recipe.cuisine}</h1> 
       {/*    */}
-    {/* <div style={{ width: "100vw" }} className="d-flex justify-content-center align-items-center">
+    <div style={{ width: "100vw" }} className="d-flex justify-content-center align-items-center">
       
          <div style={{ borderRadius: 5, marginBottom: 20 }}>
            <div style={{ width: 1132, height: 400, borderRadius: 5, display: "flex", padding: 10 }}>
@@ -137,8 +137,6 @@ function ShowRecipe() {
               </div>
 
 
-
-
             </div>
 
 
@@ -146,7 +144,7 @@ function ShowRecipe() {
 
         </div>
 
-     </div> */} 
+     </div> 
     </>
   );
 

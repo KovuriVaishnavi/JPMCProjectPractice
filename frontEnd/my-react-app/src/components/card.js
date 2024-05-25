@@ -3,14 +3,15 @@ import React from 'react'
 export default function Card(props) {
     return (
         <>
-         <div className="card m-5" id='card' style={{ backgroundImage: `url('https://source.unsplash.com/random/300x300/${props.recipename}')` }}>
-                <div class="card-body text-dark bg-opacity-50">
 
-                    <h4 class="card-title ">{props.recipename}</h4>
-                    <p class="card-text">{props.description}</p>
-                    <button href="#" class="btn btn-primary">RECIPE</button>
-                </div>
+          <div className="card" style={{ width: "100%" }}>
+            <img src={`https://source.unsplash.com/random/900×700/?${props.recipename}`} className="card-img-top" alt={props.recipename} style={{ objectFit: "cover", width: "100%", height: "200px" }} />
+            <div className="card-body">
+              <h5 className="card-title">{props.recipename}</h5>
+              <p>lets make amazing {props.description}</p>
             </div>
+          </div>
+        
         </>
     )
 }

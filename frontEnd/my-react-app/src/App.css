@@ -45,7 +45,6 @@ a:hover{
 #card{
   width: 18rem;
   
-  background-image: url('https://source.unsplash.com/random/900x700/${props.recipename}');
 }
 .grid-container {
   display: grid;

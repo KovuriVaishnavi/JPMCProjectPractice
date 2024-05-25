@@ -16,10 +16,10 @@ async function signUpForm(req, res) {
             req.body.email === undefined ||
             req.body.password === undefined ||
             req.body.preferences === undefined ||
-            req.body.preferences.dietaryRestrictions === undefined ||
+            req.body.preferences.dietraryRestrictions === undefined ||
             req.body.preferences.favouriteCuisines === undefined
-        ) {
-            return res.status(404).json({ message: "Please enter all details properly" });
+        ) { 
+            return res.status(404).json({ user: req.body });
         }
         const usersCheckEmail=await userModel.find({email:{$regex:req.body.email,$options:'i'}});
         if(usersCheckEmail.length>0)
@@ -52,12 +52,12 @@ async function signUpForm(req, res) {
 
 //login form
 async function loginForm(req, res) {
-    let username = req.body.username;
+   
     try {
-        const users = await userModel.find({ username: { '$regex': username, '$options': 'i' } });
+        const users = await userModel.find({ email: { '$regex': req.body.email, '$options': 'i' } });
         console.log(users)
         if (users.length === 0) {
-            res.status(404).json({ message: "Username does not exist!" });
+            res.status(404).json({ message: "email does not exist!" });
         } else {
             const user = users[0];
             const validPass = await bcrypt.compare(req.body.password, user.password);
@@ -65,7 +65,7 @@ async function loginForm(req, res) {
             else{
                 let payload = { email:user.email};
                 const token = jwt.sign(payload, "Secret Key",{expiresIn:"1h"});
-                res.status(200).json({ message: "User login successful!" ,token:token});
+                res.status(200).json({token:token});
             } 
         }
     } catch (error) {

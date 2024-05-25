@@ -19,7 +19,22 @@ async function addRecipe(req,res){
     }
 }
 
-
+async function getRecipes(req,res){
+    
+    try{
+    const recipes=await recipeModel.find();
+    if(!recipes){
+        res.status(404).send("recipes does not exist!");
+    }
+    else{
+        res.status(200).json(recipes);
+    }
+    }
+    catch(error){
+        console.log("error in searching:",error);
+        res.status(404).json({message:"Internal server error"})
+    }
+}
 //getting recipe by id
 async function getRecipeById(req,res){
     const {id}=req.params;
@@ -139,7 +154,7 @@ async function getRecipeByUserPreference(req, res) {
 
 
 
-module.exports={addRecipe,getRecipeById,getRecipeByIngredient,getRecipeByCuisine,getRecipeByName,getRecipeByUserPreference}
+module.exports={addRecipe,getRecipeById,getRecipeByIngredient,getRecipeByCuisine,getRecipeByName,getRecipeByUserPreference,getRecipes}
 
 
 

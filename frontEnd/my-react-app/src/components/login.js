@@ -1,5 +1,21 @@
-import {React} from 'react';
+import {React, useState} from 'react';
+import {Link} from 'react-router-dom'
+import { useAuth } from '../context/Athorization';
+
 function Login(){
+    const auth=useAuth()
+    const [email,setEmail]=useState(null)
+    const [password,setPassword]=useState(null)
+     
+    
+  const handleClick = async (e) => {
+    if (auth && Auth.loginAction) {
+      await Auth.loginAction({ password: password, email: email });
+    } else {
+      console.error("Auth object or loginAction method is not available.");
+    }
+  };
+
     return (
         <section className="vh-100" style={{ backgroundColor: "#eee"}}>
   <div className="container h-100">
@@ -10,24 +26,10 @@ function Login(){
             <div className="row justify-content-center">
               <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
                 <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style={{color:"#FFA500"}}>
-                  Sign In
+                  LOGIN
                 </p>
                 <form className="mx-1 mx-md-4">
-                  <div className="d-flex flex-row align-items-center mb-4">
-                    <i className="fas fa-user fa-lg me-3 fa-fw" style={{color:"#FFA500"}}/>
-                    <div
-                      data-mdb-input-init=""
-                      className="form-outline flex-fill mb-0"
-                    >
-                      <input
-                        type="text"
-                        id="form3Example1c"
-                        className="form-control"
-                        placeholder="please enter your name"
-                      />
-                      
-                    </div>
-                  </div>
+                  
                   <div className="d-flex flex-row align-items-center mb-4">
                     <i className="fas fa-envelope fa-lg me-3 fa-fw" style={{color:"#FFA500"}} />
                     <div
@@ -39,6 +41,7 @@ function Login(){
                         id="form3Example3c"
                         className="form-control"
                         placeholder="enter email"
+                        onChange={(e) => setEmail(e.target.value)}
                       />
                       
                     </div>
@@ -54,6 +57,7 @@ function Login(){
                         id="form3Example4c"
                         className="form-control"
                         placeholder="enter password"
+                        onChange={(e) => setPassword(e.target.value)}
                       />
                       
                     </div>
@@ -61,10 +65,9 @@ function Login(){
                   
                   <div className="form-check d-flex justify-content-center mb-5">
                     
-                    <label className="form-check-label" htmlFor="form2Example3">
-                      don't you have account?
-                      <a href="#!" className="ms-2">sign up</a>
-                    </label>
+                    
+                      don't you have account?<Link  to='/register'>sign up</Link>
+                   
                   </div>
                   <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                     <button
@@ -72,7 +75,7 @@ function Login(){
                       data-mdb-button-init=""
                       data-mdb-ripple-init=""
                       className="btn  btn-lg"
-                      style={{backgroundColor:"#FFA500",color:"white"}}
+                      style={{backgroundColor:"#FFA500",color:"white"}} onClick={handleClick}
                     >
                        Login
                     </button>
