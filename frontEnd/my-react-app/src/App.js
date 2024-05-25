@@ -5,10 +5,12 @@ import axios from 'axios'
 import 'bootstrap/dist/css/bootstrap.css'
 import Navbar from './components/navbar';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './pages/home';
-import Login from './pages/login';
+import Home from './components/home';
+import Login from './components/login';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
 import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
+import ShowRecipe from './components/showRecipe.js';
+import Register from './components/registration.js';
 
 class App extends React.Component {
 
@@ -17,8 +19,10 @@ class App extends React.Component {
       <>
         <Router>
           <Routes>
-            <Route path='/' Exact element={<Home />}></Route>
-            <Route path='/login' Exact element={<Login/>}></Route>
+            <Route path='/' exact element={<Home />}></Route>
+            <Route path='/login' exact element={<Login/>}></Route>
+            <Route path='/recipe/:id' element={<ShowRecipe/>}></Route>
+            <Route path='/register' exact element={<Register/>}></Route>
           </Routes>
         </Router>
 

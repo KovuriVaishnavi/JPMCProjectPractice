@@ -1,11 +1,11 @@
 import React from 'react'
-
+import '../App.css'
 export default function Carousel() {
     return (
         
             <div>
             <div>
-                <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel" style={{objectFit:"contain !important"}}>
+                <div id="carouselExampleFade" className="carousel slide carousel-fade m-5" data-bs-ride="carousel" style={{objectFit:"contain !important"}}>
                     <div className="carousel-inner" id='carousel' >
                         <div className="carousel-caption" style={{zIndex:"10"}}>
                             <form className="d-flex">
@@ -14,13 +14,13 @@ export default function Carousel() {
                             </form>
                         </div>
                         <div className="carousel-item active">
-                            <img src="https://source.unsplash.com/random/900×700/?burger" className="d-block w-100" style={{filter:"brightness(30%)",objectFit:"contain !important"}} alt="..." />
+                            <img src="https://source.unsplash.com/random/900×700/?burger" className="d-block w-100" style={{ objectFit: "cover", width: "100%", height: "600px" }} alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src="https://source.unsplash.com/random/900×700/?pizza" className="d-block w-100" style={{filter:"brightness(30%)",objectFit:"contain !important"}} alt="..." />
+                            <img src="https://source.unsplash.com/random/900×700/?pizza" className="d-block w-100" style={{ objectFit: "cover", width: "100%", height: "600px" }} alt="..." />
                         </div>
                         <div className="carousel-item">
-                            <img src="https://source.unsplash.com/random/900×700/?frenchfries" className="d-block w-100" style={{filter:"brightness(30%)",objectFit:"contain !important"}} alt="..." />
+                            <img src="https://source.unsplash.com/random/900×700/?frenchfries" className="d-block w-100"style={{ objectFit: "cover", width: "100%", height: "600px" }} alt="..." />
                         </div>
                     </div>
                     <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

@@ -23,6 +23,7 @@ routes.patch('/api/preferences/:id',getControllerUser.updatePreference);
 
 //Recipe Endpoints
 routes.post('/api/recipes',getControllerRecipe.addRecipe);
+routes.get('/api/recipes',getControllerRecipe.getRecipes)
 routes.get('/api/recipes/search/id/:id',getControllerRecipe.getRecipeById)
 routes.get('/api/recipes/search/name/:name',getControllerRecipe.getRecipeByName)
 routes.get('/api/recipes/search/ingredient/:ingredient',getControllerRecipe.getRecipeByIngredient)
