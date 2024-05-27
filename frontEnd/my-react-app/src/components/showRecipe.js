@@ -1,68 +1,56 @@
-import React, { useState, useEffect } from "react";
+import axios from 'axios';
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from 'axios'
+
 
 function ShowRecipe() {
   const [recipe, setRecipe] = useState();
   const { id } = useParams();
 
+
+ 
+  useEffect(() => {
+    axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
+    .then(response=>{
+      console.log(response.data)
+      setRecipe(response.data)})
   
-  useEffect(async() => {
-        await fetch(`http://localhost:3001/api/recipes/search/id/${id}`)
-         .then(res=>res.json())
-         .then(data=>setRecipe(data))
-         localStorage.setItem("recipe",recipe)
-         console.log(recipe)
-},[])
-
-  // const recipe={
-  //   "id": "1",
-  //   "name": "Tea",
-  //   "ingredients": [
-  //     "coffie powder",
-  //     "milk",
-  //     "sugar",
-  //     "water"
-  //   ],
-  //   "instructions": "afdjahsbfljrflkhjehrwfiludfbviwkjrgkljhiwovmngu",
-  //   "cuisine": "hsfdgck",
-  //   "difficulty": "easy",
-  //   "image": "https://source.unsplash.com/random/900×700/?fruit",
-  //   "likes": 0,
-  //   "averageRating": 0,
-  //   "Rating": [],
-  //   "comments": [],
-  //   "__v": 0
-  // }
+  },[])
 
 
-
-
+  function handleReadMoreClick(event) {
+    event.preventDefault();
+    const commentsSection = document.getElementById("comments-section");
+    commentsSection.scrollIntoView({ behavior: "smooth" });
+  }
+  
+  
   return (
     <>
-       {/* <h1>{recipe.name}</h1>  */}
-    {/* <h1>{recipe.instructions}</h1>
-    <h1>{recipe.cuisine}</h1> 
-      {/*    */}
-    <div style={{ width: "100vw" }} className="d-flex justify-content-center align-items-center">
+
+     <div style={{ width: "100vw" }} className="d-flex justify-content-center align-items-center">
       
          <div style={{ borderRadius: 5, marginBottom: 20 }}>
            <div style={{ width: 1132, height: 400, borderRadius: 5, display: "flex", padding: 10 }}>
              <div style={{ flex: 1 }}>
                <div style={{ margin: 10 }}>
-                 <h1>{recipe.name}</h1>
+                 {recipe && recipe.name && <h1>{recipe.name}</h1>}
                </div>
                <div style={{ margin: 10, fontSize: 20 }}>
                  <p>Rating..</p>
                </div>
                <div style={{ margin: 10 }}>
-                 <p>
-                   {recipe.comments.length > 0 && recipe.comments[0].comment}
-                   <a href="#" className="ms-2">ReadMore</a>
-                 </p>
+               {recipe && recipe.comments && recipe.comments.length > 0 && (
+  <p>
+    {recipe.comments[0].comment}
+    {recipe.comments.length > 1 && <a href="#" className="ms-2" onClick={handleReadMoreClick}>Read More</a>}
+  </p>
+)}
+
+
                </div>
                <div style={{ margin: 10, display: "inline-block", fontSize: 50 }}>
-                 <p>{recipe.ingredients.length} ingredients</p>
+                 {recipe && recipe.ingredients&&<p>{recipe.ingredients.length} ingredients</p>}
                </div>
                <div style={{ margin: 10, display: "flex", alignItems: "center" }}>
                  <div className="me-3">
@@ -74,12 +62,12 @@ function ShowRecipe() {
                </div>
              </div>
              <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2" style={{ flex: 1 }}>
-               <img
+              {recipe && recipe.image&& <img
                 style={{ objectFit: "cover", width: "100%", height: "100%", borderRadius: 10 }}
                 src={recipe.image}
                 className="img-fluid"
                 alt="Sample image"
-              />
+              />}
             </div>
           </div>
           <div>
@@ -90,12 +78,16 @@ function ShowRecipe() {
                 Ingredients
               </h3>
               <ul style={{ listStyleType: "none" }}>
-                {recipe.ingredients.map((ingredient, index) => (
+              {recipe && recipe.ingredients&&recipe.ingredients.length>0&&recipe.ingredients.map((ingredient, index) => (
                   <li key={index} style={{ fontFamily: "Dancing Script", cursive: true, fontOpticalSizing: "auto", fontWeight: 400, fontStyle: "normal", fontSize: "25px" }}>
                     <i className="fas fa-check" style={{ marginRight: "50px", color: "green" }} />
                     {ingredient}
                   </li>
                 ))}
+
+
+
+
               </ul>
             </div>
             <div style={{ width: "1132px", margin: "0 auto" }}>
@@ -104,9 +96,9 @@ function ShowRecipe() {
                 <i className="fas fa-lightbulb" />
                 Follow these instructions...
               </h3>
-              <p style={{ margin: "20px", fontFamily: "Dancing Script", cursive: true, fontOpticalSizing: "auto", fontWeight: 400, fontStyle: "normal", fontSize: "25px" }}>
+              {recipe && recipe.instructions &&<p style={{ margin: "20px", fontFamily: "Dancing Script", cursive: true, fontOpticalSizing: "auto", fontWeight: 400, fontStyle: "normal", fontSize: "25px" }}>
                 {recipe.instructions}
-              </p>
+              </p>}
             </div>
             <div id="comments-section">
               <hr style={{ height: 1, border: 0, backgroundColor: "gray", margin: "100px" }} />
@@ -126,10 +118,10 @@ function ShowRecipe() {
                     console.log(comment);
                   }}
                 />
-                {recipe.comments.map((comment, index) => (
+               {recipe && recipe.comments && recipe.comments.length &&recipe.comments.map((comment, index) => (
                   <div key={index} style={{ margin: "10px" }}>
                     <hr style={{ height: 1, border: 0, backgroundColor: "gray", marginLeft: "100px", marginRight: "100px", marginTop: "20px", marginBottom: "20px" }} />
-                    <li style={{ listStyleType: "none" }}>{comment._id.$oid}</li>
+                    <li style={{ listStyleType: "none" }}>{comment._id}</li>
                     <li style={{ listStyleType: "none", margin: "10px", fontFamily: "Dancing Script", cursive: true, fontOpticalSizing: "auto", fontSize: "25px", fontWeight: 400, fontStyle: "normal" }}>{comment.comment
                     }</li>
                   </div>
@@ -137,16 +129,27 @@ function ShowRecipe() {
               </div>
 
 
+
+
+
+
+
+
             </div>
+
+
 
 
           </div>
 
+
         </div>
+
 
      </div> 
     </>
   );
+
 
 }
 export default ShowRecipe;

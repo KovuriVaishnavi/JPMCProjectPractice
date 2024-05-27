@@ -15,7 +15,8 @@ const userSchema=new mongoose.Schema({
         favouriteCuisines:[String]
     },
     favorites: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
-    likes:[{type:mongoose.Schema.Types.ObjectId,ref:'Recipe'}]
+    likes:[{type:mongoose.Schema.Types.ObjectId,ref:'Recipe'}],
+    usertype:Number
 
 });
 const userModel=mongoose.model('User',userSchema);

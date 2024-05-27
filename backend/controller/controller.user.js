@@ -19,14 +19,14 @@ async function signUpForm(req, res) {
             req.body.preferences.dietraryRestrictions === undefined ||
             req.body.preferences.favouriteCuisines === undefined
         ) { 
-            return res.status(404).json({ user: req.body });
+            return res.status(400).json({message:"Enter all details properly"});
         }
         const usersCheckEmail=await userModel.find({email:{$regex:req.body.email,$options:'i'}});
         if(usersCheckEmail.length>0)
-            return res.status(404).json({message:"You have already registered with this email"});
+            return res.status(400).json({message:"this email is already registered "});
         const usersCheckName=await userModel.find({username:{$regex:req.body.username,$options:'i'}})
         if(usersCheckName.length>0)
-            return res.status(200).json({message:"Another user already exists with this name. Please try a different name"})
+            return res.status(400).json({message:"Another user already exists with this name. Please try a different name"})
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(req.body.password, salt);
         const user = await userModel.create({
@@ -38,9 +38,10 @@ async function signUpForm(req, res) {
             favouriteCuisines:req.body.preferences.favouriteCuisines
         },
             favorites: null,
-            likes:null
+            likes:null,
+            usertype:req.body.usertype
         });
-        res.status(201).json({ message: "User created successfully", user });
+        res.status(200).json({ message: "User created successfully" });
     } catch (error) {
         console.error("Error creating user:", error);
         res.status(500).json({ message: "Internal server error" });
@@ -51,7 +52,7 @@ async function signUpForm(req, res) {
 
 
 //login form
-async function loginForm(req, res) {
+async function loginForm(req, res) { 
    
     try {
         const users = await userModel.find({ email: { '$regex': req.body.email, '$options': 'i' } });
@@ -65,7 +66,7 @@ async function loginForm(req, res) {
             else{
                 let payload = { email:user.email};
                 const token = jwt.sign(payload, "Secret Key",{expiresIn:"1h"});
-                res.status(200).json({token:token});
+                res.status(200).json({token:token,user:user.usertype});
             } 
         }
     } catch (error) {

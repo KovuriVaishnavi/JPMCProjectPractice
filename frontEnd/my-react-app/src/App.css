@@ -73,3 +73,18 @@ a:hover{
   height: 100%; /* Ensure the image fills the entire height */
   object-fit: cover; /* Maintain aspect ratio while covering the container */
 }
+
+
+.logout-button {
+  background-color: yellow;
+  color: black;
+  border: none;
+  border-radius: 20px; /* Adjust the border-radius value to control the curvature */
+  padding: 8px 16px; /* Adjust padding as needed */
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Add a smooth transition effect */
+}
+
+.logout-button:hover {
+  background-color: #ffc107; /* Change background color on hover */
+}
