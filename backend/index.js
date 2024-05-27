@@ -19,8 +19,9 @@ app.listen(port)
 
 //establishing mongodb connection
 const mongoose =require('mongoose');
-mongoose.connect("mongodb://localhost:27017/Recipejp").then(()=>{
+mongoose.connect("mongodb://127.0.0.1:27017/Recipejp").then(()=>{
     console.log("connection successful")
 }).catch(()=>{
     console.log("connection unsuccessful")
 })
+
