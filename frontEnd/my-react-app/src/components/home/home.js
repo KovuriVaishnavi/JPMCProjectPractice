@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import Navbar from './navbar';
-import Card from './card';
-import Carousel from './carousel';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import AppDownload from '../AppDownload/AppDownload';
+import Carousel from '../Carousel/carousel';
+import Footer from '../Footer/Footer';
+import HomeNavbar from '../HomeNavbar/HomeNavbar';
+import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function Home() {
   const [recipes, setRecipes] = useState([]);
@@ -19,7 +21,7 @@ export default function Home() {
   return (
     <>
       <div>
-        <Navbar />
+        <HomeNavbar />
         <Carousel />
         <div className="container mt-4">
           <h2 className="text-center mb-4">FOR YOU</h2>
@@ -27,12 +29,14 @@ export default function Home() {
             {recipes.map((recipe, index) => (
               <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
                 <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                  <Card recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+                  <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
                 </div>
               </Link>
             ))}
           </div>
         </div>
+        <AppDownload></AppDownload>
+        <Footer></Footer>
       </div>
     </>
   );

@@ -1,11 +1,12 @@
-import React from 'react'
-
-import Carousel from './carousel'
-import Usernavbar from './usernavbar';
-import { useState,useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import Card from './card';
-export default function Userdashboard() {
+import AppDownload from '../AppDownload/AppDownload';
+import Carousel from '../Carousel/carousel';
+import Footer from '../Footer/Footer';
+import RecipeCard from '../RecipeCard/RecipeCard';
+import AdminNavbar from '../adminnavbar/adminnavbar';
+
+export default function Admindashboard() {
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
@@ -14,24 +15,25 @@ export default function Userdashboard() {
       .then(data => setRecipes(data))
       .catch(error => console.error('Error fetching recipes:', error));
   }, []);
+
   return (
     <>
-      <Usernavbar></Usernavbar>
-      <Carousel></Carousel>
-      <div className="container mt-4">
+    <AdminNavbar></AdminNavbar>
+      <Carousel />
+      <div className="container mt-4 userdashboard" id="userdashboard">
         <h2 className="text-center mb-4">FOR YOU</h2>
         <div className="d-flex flex-wrap justify-content-around">
           {recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
               <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                <Card recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
               </div>
             </Link>
           ))}
         </div>
       </div>
-    
-    
+      <AppDownload />
+      <Footer />
     </>
-  )
+  );
 }

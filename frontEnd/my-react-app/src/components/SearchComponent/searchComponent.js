@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import Card from './card';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function SearchResults() {
   const { name } = useParams();
@@ -33,7 +32,7 @@ export default function SearchResults() {
           recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
               <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                <Card recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
               </div>
             </Link>
           ))

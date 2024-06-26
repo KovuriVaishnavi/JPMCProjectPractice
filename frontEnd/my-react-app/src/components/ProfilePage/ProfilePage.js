@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './ProfilePage.css';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
-import ProfileNavBar from './ProfileNavBar';
-import UserPreferences from './UserPreferences';
+import React, { useState } from 'react';
+import ProfileNavBar from '../ProfileNavbar/ProfileNavBar';
+import UserPreferences from '../UserPreferences/UserPreferences';
+import './ProfilePage.css';
 
 const ProfilePage = () => {
   const [showPreferences, setShowPreferences] = useState(false);
