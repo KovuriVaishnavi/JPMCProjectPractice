@@ -46,7 +46,7 @@ export default function RecipeForm() {
       if (response.ok) {
         alert('Recipe added successfully!');
     
-        navigate('/dashboard'); 
+        navigate('/admindashboard'); 
       } else {
         alert(result.message);
         

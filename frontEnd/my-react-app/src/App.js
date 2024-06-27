@@ -19,6 +19,7 @@ import AdminProtect from './protectedComponents/protectDashboard.js';
 import Admindashboard from './components/admindashboard.js';
 import UserProtect from './protectedComponents/userProtect.js';
 import AppNavbar from './protectedComponents/navbarprotect.js';
+import ProfilePage from './components/ProfilePage.js';
 class App extends React.Component {
 
   render() {
@@ -42,8 +43,8 @@ class App extends React.Component {
           <Route path='/userdashboard' exact element={<Userdashboard/>}></Route>
           </Route >
           
-          <Route path='/search/:name' exact element={<SearchResults/>}> </Route>
-           
+          <Route path='/search/:criteria/:term' exact element={<SearchResults/>}> </Route>
+           <Route path='/profile' exact element={<ProfilePage/>}></Route>
         </Routes>
          </AuthProvider>
       </Router>

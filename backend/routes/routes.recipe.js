@@ -10,7 +10,7 @@ const getControllerRecipe=require('../controller/controller.recipe');
 //Authentication end points
 routes.post('/api/auth/signup',getControllerUser.signUpForm);
 routes.post('/api/auth/login',getControllerUser.loginForm);
-routes.post('/api/auth/logout',getControllerUser.logout);
+// routes.post('/api/auth/logout',getControllerUser.logout);
 
 
 

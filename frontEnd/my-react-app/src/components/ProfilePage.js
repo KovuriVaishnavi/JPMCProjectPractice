@@ -3,29 +3,37 @@ import './ProfilePage.css';
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import ProfileNavBar from './ProfileNavBar';
 import UserPreferences from './UserPreferences';
-
+import ShowFavorites from './showFavourites';
+import { useAuth } from '../context/authentication';
 const ProfilePage = () => {
+  const auth = useAuth();
   const [showPreferences, setShowPreferences] = useState(false);
+  const [view, setView] = useState(''); // 'preferences' or 'favourites'
 
-  const handlePreferencesClick = () => {
-    setShowPreferences(prevState => !prevState);
+  const handlePreferencesClick = (type) => {
+    setView(type);
+    setShowPreferences(prevState => type === 'preferences' ? !prevState : false);
   };
+
+  // Retrieve username from localStorage
+  const username = JSON.parse(localStorage.getItem('user')).username;
 
   return (
     <div className="home-container">
       <div className="content">
         <div className="image-container">
-          <img src={'/SHINCHAN.jpg'} alt="Profile" className="home-logo" style={{ width: '90%', height: '90%' }} />
+          <img src={'https://source.unsplash.com/random/900×700/?blankprofilephoto'} alt="Profile" className="home-logo" style={{ width: '90%', height: '90%' }} />
           <div className="icon-overlay">
             <CameraAltOutlinedIcon fontSize="large" />
           </div>
         </div>
         <div className="text-container mt-1">
-          <h1><b>Name</b></h1>
+          <h1>{username}</h1>
         </div>
-        <button className='circular-button mb-3 mt-1'>Log Out</button>
+        <button className='circular-button mb-3 mt-1' onClick={auth.logOut}>Log Out</button>
         <ProfileNavBar onPreferencesClick={handlePreferencesClick} />
-        {showPreferences && <UserPreferences />}
+        {view === 'preferences' && showPreferences && <UserPreferences />}
+        {view === 'favourites' && <ShowFavorites/> }
       </div>
     </div>
   );

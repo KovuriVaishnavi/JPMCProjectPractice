@@ -13,7 +13,7 @@ export default function AdminProtect() {
 
     if (!token) {
       setIsAuthenticated(false);
-    } else if (user !== 1) {
+    } else if (user.usertype !== 1) {
       setUserRole(0);
     } else {
       setIsAuthenticated(true);

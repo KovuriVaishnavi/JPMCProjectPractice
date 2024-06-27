@@ -13,7 +13,7 @@ export default function UserProtect() {
 
     if (!token) {
       setIsAuthenticated(false);
-    } else if (user !== 0) {
+    } else if (user.usertype !== 0) {
       setUserRole(1);
     } else {
       setIsAuthenticated(true);

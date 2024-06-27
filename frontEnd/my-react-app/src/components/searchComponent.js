@@ -4,13 +4,13 @@ import Card from './card';
 import { Link } from 'react-router-dom';
 
 export default function SearchResults() {
-  const { name } = useParams();
+  const { criteria,term} = useParams();
   const [recipes, setRecipes] = useState([]);
 
   useEffect(() => {
     const fetchSearchResults = async () => {
       try {
-        const response = await fetch(`http://localhost:3001/api/recipes/search/name/${name}`);
+        const response = await fetch(`http://localhost:3001/api/recipes/search/${criteria}/${term}`);
 
         const data = await response.json();
         setRecipes(data);
@@ -28,7 +28,7 @@ export default function SearchResults() {
       <h2 className="text-center mb-4">Searched Items</h2>
       <div className="d-flex flex-wrap justify-content-around">
         {recipes.length === 0 ? (
-          <p>No results found for "{name}".</p>
+          <p>No results found for "{term}".</p>
         ) : (
           recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>

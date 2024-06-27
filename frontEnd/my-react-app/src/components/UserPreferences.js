@@ -1,8 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import './UserPreference.css';
 
 function UserPreferences() {
-  const initialRecipes = [
+  const [dietaryPreferences, setDietaryPreferences] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [showDietOptions, setShowDietOptions] = useState(false);
+  const [showCuisineOptions, setShowCuisineOptions] = useState(false);
+  const [selectedDiets, setSelectedDiets] = useState([]);
+  const [selectedCuisines, setSelectedCuisines] = useState([]);
+
+  const recipes1 = [
     { name: "Italian", picture: "https://x.yummlystatic.com/web/bubble/cuisine/italian.png" },
     { name: "American", picture: "https://x.yummlystatic.com/web/bubble/cuisine/american.png" },
     { name: "Asian", picture: "https://x.yummlystatic.com/web/bubble/cuisine/asian.png" },
@@ -13,7 +21,7 @@ function UserPreferences() {
     { name: "South Western", picture: "https://x.yummlystatic.com/web/bubble/cuisine/southwestern.png" }
   ];
 
-  const initialDietaryPreferences = [
+  const preferences1 = [
     { name: "Vegan", picture: "https://www.cureveda.com/cdn/shop/files/Logo_New_1_e207fc7c-b49b-45aa-a1c8-3bd2b106865d.png?v=1707588211&width=352" },
     { name: "Non-Vegetarian", picture: "https://media.istockphoto.com/id/1742997187/vector/whole-roasted-chicken-on-plate-grilled-chicken-in-plate-non-veg-food-non-vegetarian-dish.jpg?s=612x612&w=0&k=20&c=3ioolOYDg528vaa0He_BCUKIY7tPB7enUlT_mIlYxEc=" },
     { name: "Pescetarian", picture: "https://cdn.iconscout.com/icon/premium/png-256-thumb/pescatarian-5434092-4535857.png"},
@@ -23,63 +31,123 @@ function UserPreferences() {
     { name: "Diabetes", picture: "https://www.shutterstock.com/image-vector/vector-circle-icon-emblem-linear-600nw-2026752749.jpg" }
   ];
 
-  const [dietaryPreferences, setDietaryPreferences] = useState(initialDietaryPreferences);
-  const [recipes, setRecipes] = useState(initialRecipes);
-  const [showDietOptions, setShowDietOptions] = useState(false);
-  const [showCuisineOptions, setShowCuisineOptions] = useState(false);
-  const [selectedDiets, setSelectedDiets] = useState([]);
-  const [selectedCuisines, setSelectedCuisines] = useState([]);
+  useEffect(() => {
+    // Fetch initial preferences from the backend
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userId = user._id; 
+    axios.get(`http://localhost:3001/api/preferences/${userId}`)
+      .then(response => {
+        console.log("Fetched user preferences:", response.data); // Log the response to see its structure
 
-  function handleSelect(index, type) {
+        const dietaryRestrictions = response.data.dietraryRestrictions || [];
+        const favoriteCuisines = response.data.favouriteCuisines || [];
+
+        const fetchedDiets = preferences1.filter(item => dietaryRestrictions.includes(item.name));
+        const fetchedCuisines = recipes1.filter(item => favoriteCuisines.includes(item.name));
+
+        setSelectedDiets(fetchedDiets);
+        setSelectedCuisines(fetchedCuisines);
+        setDietaryPreferences(preferences1.filter(item => !dietaryRestrictions.includes(item.name)));
+        setRecipes(recipes1.filter(item => !favoriteCuisines.includes(item.name)));
+      }).catch(error => {
+        console.error("Error fetching user preferences:", error);
+      });
+
+    setDietaryPreferences(preferences1);
+    setRecipes(recipes1);
+  }, []);
+
+  async function handleSelect(index, type) {
     if (type === 'diet') {
       const selected = dietaryPreferences[index];
-      setSelectedDiets([...selectedDiets, selected]);
-      setDietaryPreferences(dietaryPreferences.filter((_, i) => i !== index));
+      setSelectedDiets(prevSelectedDiets => {
+        const updatedDiets = [...prevSelectedDiets, selected];
+        updatePreferences(updatedDiets, selectedCuisines);
+        return updatedDiets;
+      });
+      setDietaryPreferences(prevDietaryPreferences => prevDietaryPreferences.filter((_, i) => i !== index));
     } else if (type === 'cuisine') {
       const selected = recipes[index];
-      setSelectedCuisines([...selectedCuisines, selected]);
-      setRecipes(recipes.filter((_, i) => i !== index));
+      setSelectedCuisines(prevSelectedCuisines => {
+        const updatedCuisines = [...prevSelectedCuisines, selected];
+        updatePreferences(selectedDiets, updatedCuisines);
+        return updatedCuisines;
+      });
+      setRecipes(prevRecipes => prevRecipes.filter((_, i) => i !== index));
     }
   }
 
   function handleRemove(index, type) {
     if (type === 'diet') {
       const removed = selectedDiets[index];
-      setDietaryPreferences([...dietaryPreferences, removed]);
-      setSelectedDiets(selectedDiets.filter((_, i) => i !== index));
+      setSelectedDiets(prevSelectedDiets => {
+        const updatedDiets = prevSelectedDiets.filter((_, i) => i !== index);
+        updatePreferences(updatedDiets, selectedCuisines);
+        return updatedDiets;
+      });
+      setDietaryPreferences(prevDietaryPreferences => [...prevDietaryPreferences, removed]);
     } else if (type === 'cuisine') {
       const removed = selectedCuisines[index];
-      setRecipes([...recipes, removed]);
-      setSelectedCuisines(selectedCuisines.filter((_, i) => i !== index));
+      setSelectedCuisines(prevSelectedCuisines => {
+        const updatedCuisines = prevSelectedCuisines.filter((_, i) => i !== index);
+        updatePreferences(selectedDiets, updatedCuisines);
+        return updatedCuisines;
+      });
+      setRecipes(prevRecipes => [...prevRecipes, removed]);
+    }
+  }
+
+  function updatePreferences(updatedDiets, updatedCuisines) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user._id; 
+      axios.patch(`http://localhost:3001/api/preferences/${userId}`, {
+        preferences: {
+          dietraryRestrictions: updatedDiets.map(selected => selected.name),
+          favouriteCuisines: updatedCuisines.map(selected => selected.name)
+        }
+      }, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(response => {
+        console.log('Preferences updated:', response.data);
+      })
+      .catch(error => {
+        console.error('Error updating preferences:', error);
+      });
+    } else {
+      alert("Please login to update preferences");
     }
   }
 
   return (
     <div className="preferences-container">
-     <div className="place">
-      <img className="image" src="https://img.freepik.com/premium-vector/diagonal-cross-line-grid-square-seamless-pattern_80590-13921.jpg" />
-      <div className="plus">
-      <i className="fa fa-plus" aria-hidden="true" onClick={() => setShowDietOptions(!showDietOptions)}></i>
-        <div className="text1" onClick={() => setShowDietOptions(!showDietOptions)}>Add Diet</div>
-      </div>
-     </div>
+     {selectedDiets.length>0 && <h4>your restrictions</h4>}
       <div className="selected-items">
-        {selectedDiets.map((diet, index) => (
-            <div className="selected-item-content">
-          <div key={index} className="selected-item">
-            <img className="selected-image" src={diet.picture} alt={diet.name} />
-            <i className="fa fa-trash-alt delete-icon" onClick={() => handleRemove(index, 'diet')}></i>
-            <div className="overlay"></div>
-              <div className="preference-name">
-                {diet.name}
-              </div>
-          </div>
+        {selectedDiets && selectedDiets.map((diet, index) => (
+          <div key={index} className="selected-item-content">
+            <div className="selected-item">
+              <img className="selected-image" src={diet.picture} alt={diet.name} />
+              <i className="fa fa-trash-alt delete-icon" onClick={() => handleRemove(index, 'diet')}></i>
+              <div className="overlay"></div>
+              <div className="preference-name">{diet.name}</div>
+            </div>
           </div>
         ))}
       </div>
+      <div className="place">
+        <img className="image" src="https://img.freepik.com/premium-vector/diagonal-cross-line-grid-square-seamless-pattern_80590-13921.jpg" />
+        <div className="plus">
+          <i className="fa fa-plus" aria-hidden="true" onClick={() => setShowDietOptions(!showDietOptions)}></i>
+          <div className="text1" onClick={() => setShowDietOptions(!showDietOptions)}>Add Diet</div>
+        </div>
+      </div>
       {showDietOptions && (
         <div className="image-grid">
-          {dietaryPreferences.map((preference, index) => (
+          {dietaryPreferences && dietaryPreferences.map((preference, index) => (
             <div
               key={preference.name}
               className="grid-item diet"
@@ -91,28 +159,22 @@ function UserPreferences() {
                 alt={preference.name}
               />
               <div className="overlay"></div>
-              <div className="preference-name">
-                {preference.name}
-              </div>
+              <div className="preference-name">{preference.name}</div>
             </div>
           ))}
         </div>
       )}
-
-     <div className="place">
-      <img className="image" src="https://img.freepik.com/premium-vector/diagonal-cross-line-grid-square-seamless-pattern_80590-13921.jpg" alt="white bg"/>
-      <div className="plus">
-       <i className="fa fa-plus" aria-hidden="true" onClick={() => setShowCuisineOptions(!showCuisineOptions)}></i>
-        <div className="text1" onClick={() => setShowCuisineOptions(!showCuisineOptions)}>Add Cuisine</div>
-      </div>
-     </div>
+     <hr style={{ border: 0,height: '1px',background: '#333',backgroundImage: 'linear-gradient(to right, #ccc, #333, #ccc)',  margin: '20px 0'}} />
+     {selectedCuisines.length>0 && <h4>your favouriteCuisines</h4>}
+      
       <div className="selected-items">
-        {selectedCuisines.map((cuisine, index) => (
-            <div className="selected-item-content">
-          <div key={index} className="selected-item">
-            <img className="selected-image" src={cuisine.picture} alt={cuisine.name} />
-            <i className="fa fa-trash-alt remove-icon" onClick={() => handleRemove(index, 'cuisine')}></i>
-            <div className="overlay"></div>
+        {selectedCuisines && selectedCuisines.map((cuisine, index) => (
+          <div key={index} className="selected-item-content">
+            <div className="selected-item">
+              <img className="selected-image" src={cuisine.picture} alt={cuisine.name} />
+              <i className="fa fa-trash-alt remove-icon" onClick={() => handleRemove(index, 'cuisine')}></i>
+            
+              <div className="overlay"></div>
               <div className="recipe-name">
                 {cuisine.name}
               </div>
@@ -120,9 +182,16 @@ function UserPreferences() {
             </div>
         ))}
       </div>
+      <div className="place">
+        <img className="image" src="https://img.freepik.com/premium-vector/diagonal-cross-line-grid-square-seamless-pattern_80590-13921.jpg" alt="white bg" />
+        <div className="plus">
+          <i className="fa fa-plus" aria-hidden="true" onClick={() => setShowCuisineOptions(!showCuisineOptions)}></i>
+          <div className="text1" onClick={() => setShowCuisineOptions(!showCuisineOptions)}>Add Cuisine</div>
+        </div>
+      </div>
       {showCuisineOptions && (
         <div className="image-grid">
-          {recipes.map((recipe, index) => (
+          {recipes && recipes.map((recipe, index) => (
             <div key={recipe.name} className="grid-item cuisine" onClick={() => handleSelect(index, 'cuisine')}>
               <img className="recipe-image" src={recipe.picture} alt={recipe.name}/>
               <div className="overlay"></div>
