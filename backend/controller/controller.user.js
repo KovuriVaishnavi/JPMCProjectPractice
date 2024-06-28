@@ -185,10 +185,11 @@ async function addFavouriteRecipe(req,res){
     return res.status(200).json({isFavorited:true});
 }
 
-
 //add comment
 async function addComment(req, res) {
-    const { id } = req.params;
+    const { id } = req.params; 
+    const { recipeId, comment } = req.body; 
+
     try {
         const userId = req.body.userId;
         const comment = req.body.comment;
@@ -214,8 +215,6 @@ async function addComment(req, res) {
         res.status(500).json({ message: "Internal server error" });
     }
 }
-
-
 
 //remove comment
 async function removeComment(req, res) {
@@ -261,7 +260,24 @@ catch(error){
 }
 
 
+const getuserdetails = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await userModel.findById(userId).lean(); // Using lean() for better performance as it returns plain JavaScript objects
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+  
+  module.exports = { getuserdetails };
+  
 
-module.exports={signUpForm,loginForm,getPreference,updatePreference,likeRecipe,addFavouriteRecipe,addComment,rateRecipe,removeComment};
+
+module.exports={signUpForm,loginForm,getPreference,updatePreference,likeRecipe,addFavouriteRecipe,addComment,rateRecipe,removeComment,getuserdetails};
 
 

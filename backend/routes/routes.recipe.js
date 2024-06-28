@@ -38,3 +38,7 @@ routes.post('/api/recipes/:id/favorite',getControllerUser.addFavouriteRecipe)
 routes.post('/api/recipes/:id/addcomment',getControllerUser.addComment)
 routes.post('/api/recipes/:id/removecomment',getControllerUser.removeComment)
 routes.post('/api/recipes/:id/rate',getControllerUser.rateRecipe)
+
+
+//userdetails
+routes.get('/api/user/getdetails/:id',getControllerUser.getuserdetails);

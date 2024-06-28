@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../context/authentication';
-
+import './protectdashboard.css';
 export default function AdminProtect() {
   const auth = useAuth();
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -22,7 +22,12 @@ export default function AdminProtect() {
   }, []);
 
   if (isAuthenticated === null) {
-    return <div>Loading...</div>;
+    return (<div className="unauthorized-message">
+    <img src='https://media1.tenor.com/images/13491e357e7389879d246df81d252d38/tenor.gif?itemid=15155511' className='emoji'></img>
+      <p>You are not authorized to view this page!</p>
+      <p>Maybe it's time to reconsider your life choices... 🤔</p>
+      <p><a href="/login" className="login-link">Go to Login</a></p>
+    </div>);
   }
 
   if (isAuthenticated === false) {

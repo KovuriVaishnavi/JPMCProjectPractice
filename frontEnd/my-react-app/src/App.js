@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import React from 'react';
-import axios from 'axios'
-import 'bootstrap/dist/css/bootstrap.css'
-import Navbar from './components/navbar';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/home';
-import Login from './components/login';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle';
-import '../node_modules/bootstrap/dist/js/bootstrap.bundle.min.js';
-import ShowRecipe from './components/showRecipe.js';
-import Register from './components/registration.js';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import './App.css';
+import RecipeForm from './components/RecipeForm/RecipeForm.js';
+import SearchResults from './components/SearchComponent/searchComponent.js';
+import ShowRecipe from './components/ShowRecipe/showRecipe.js';
+import Admindashboard from './components/admindashboard/admindashboard.js';
+import Home from './components/home/home.js';
+import Login from './components/login/login.js';
+import Register from './components/registration/registration.js';
+import Userdashboard from './components/userdashboard/userdashboard.js';
 import AuthProvider from './context/authentication.js';
-import RecipeForm from './components/RecipeForm.js';
-import Userdashboard from './components/admindashboard.js';
-import SearchResults from './components/searchComponent.js';
 import AdminProtect from './protectedComponents/protectDashboard.js';
-import Admindashboard from './components/admindashboard.js';
-import UserProtect from './protectedComponents/userProtect.js';
-import AppNavbar from './protectedComponents/navbarprotect.js';
-import ProfilePage from './components/ProfilePage.js';
+import ProtectRecipe from './protectedComponents/protectrecipe.js';
+import UserProtect from './protectedComponents/userProtect.js'; 
+import ProfilePage from './components/ProfilePage/ProfilePage.js';
 class App extends React.Component {
 
   render() {
@@ -31,7 +27,9 @@ class App extends React.Component {
         <Routes>
           <Route path='/' exact element={<Home />}></Route>
           <Route path='/login' exact element={<Login />}></Route>
-          <Route path='/recipe/:id' element={<ShowRecipe />}></Route>
+          <Route element={<ProtectRecipe />}>
+          <Route path="/recipe/:id" element={<ShowRecipe />} />
+        </Route>
           <Route path='/register' exact element={<Register />}></Route>
           
           <Route element={<AdminProtect/>}> 
