@@ -21,7 +21,7 @@ export default function Userdashboard() {
       <Usernavbar />
       <Carousel />
       <div className="container mt-4 userdashboard" id="userdashboard">
-        <h2 className="text-center mb-4">FOR YOU</h2>
+        <h2 className="text-center mb-4">ALL RECIPES</h2>
         <div className="d-flex flex-wrap justify-content-around">
           {recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
