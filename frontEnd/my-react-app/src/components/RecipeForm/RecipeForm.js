@@ -24,7 +24,7 @@ export default function RecipeForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!formData.name || !formData.ingredients || !formData.instructions || !formData.cuisine || !formData.difficulty || !formData.imageUrl) {
+    if (!formData.name || !formData.ingredients || !formData.instructions || !formData.cuisine || !formData.difficulty || !formData.image) {
       alert('All fields are required.');
       return;
     }
@@ -46,7 +46,7 @@ export default function RecipeForm() {
       if (response.ok) {
         alert('Recipe added successfully!');
     
-        navigate('/dashboard'); 
+        navigate('/admindashboard'); 
       } else {
         alert(result.message);
         
@@ -140,10 +140,10 @@ export default function RecipeForm() {
                         <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
                           <input
                             type="text"
-                            name="imageUrl"
+                            name="image"
                             className="form-control"
                             placeholder="Please paste image URL"
-                            value={formData.imageUrl}
+                            value={formData.image}
                             onChange={handleChange}
                           />
                         </div>

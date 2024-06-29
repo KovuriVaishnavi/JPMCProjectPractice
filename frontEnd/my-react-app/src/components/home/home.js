@@ -12,7 +12,10 @@ export default function Home() {
   useEffect(() => {
     fetch('http://localhost:3001/api/recipes')
       .then(response => response.json())
-      .then(data => setRecipes(data))
+      .then((data) => {
+        setRecipes(data)
+        console.log(data);
+      })
       .catch(error => console.error('Error fetching recipes:', error));
   }, []);
 
@@ -29,7 +32,7 @@ export default function Home() {
             {recipes.map((recipe, index) => (
               <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
                 <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                  <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+                  <RecipeCard recipename={recipe.name} image={recipe.image} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} />
                 </div>
               </Link>
             ))}

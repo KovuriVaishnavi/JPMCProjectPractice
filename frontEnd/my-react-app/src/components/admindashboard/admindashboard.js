@@ -26,7 +26,7 @@ export default function Admindashboard() {
           {recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
               <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image}/>
               </div>
             </Link>
           ))}

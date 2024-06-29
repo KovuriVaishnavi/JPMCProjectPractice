@@ -1,14 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/authentication';
 import './usernavbar.css';
 
 export default function Usernavbar() {
+  const navigate = useNavigate();
   const auth = useAuth();
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">
-        <h4 className="m-3" style={{color:'orange'}}>RecipeRadar</h4>
+        <h4 className="m-3" style={{ color: 'orange' }}>RecipeRadar</h4>
         <button
           className="navbar-toggler"
           type="button"
@@ -23,12 +25,12 @@ export default function Usernavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#userdashboard">
+              <a className="nav-link active" aria-current="page" onClick={() => navigate('/')}>
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#contactus">
+              <a className="nav-link" href="#carouselExampleFade">
                 About Us
               </a>
             </li>

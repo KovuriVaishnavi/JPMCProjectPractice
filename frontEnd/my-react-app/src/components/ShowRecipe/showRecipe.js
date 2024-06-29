@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import RatingShow from '../RatingShow/RatingShow';
 import './showRecipe.css'; // Import the CSS file
-
 function ShowRecipe() {
   const [recipe, setRecipe] = useState();
   const { id } = useParams();
@@ -120,7 +120,7 @@ function ShowRecipe() {
         <div className="recipe-details">
           <div className="recipe-header">
             {recipe && recipe.name && <h1>{recipe.name}</h1>}
-            <p>Rating..</p>
+            {recipe && <RatingShow rating={recipe.averageRating} />}
           </div>
           <div className="recipe-comments">
             {recipe && recipe.comments && recipe.comments.length > 0 && (
