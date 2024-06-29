@@ -4,7 +4,7 @@ import ProfileNavBar from '../ProfileNavbar/ProfileNavBar';
 import UserPreferences from '../UserPreferences/UserPreferences';
 import './ProfilePage.css';
 import { useAuth } from '../../context/authentication';
-import ShowFavorites from '../showFavourites';
+import ShowFavorites from '../showFavorites/showFavourites';
 const ProfilePage = () => {
   const auth = useAuth();
   const [showPreferences, setShowPreferences] = useState(false);

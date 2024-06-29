@@ -55,6 +55,11 @@ export default function AdminNavbar() {
                 LogOut
               </button>
             </li>
+            <li className="nav-item">
+            <Link className="nav-link btn" to="/profile" >
+              <i className="fa-solid fa-user"></i>
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

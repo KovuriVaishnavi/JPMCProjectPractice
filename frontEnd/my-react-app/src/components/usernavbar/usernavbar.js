@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../../context/authentication';
 import './usernavbar.css';
-
+import { Link } from 'react-router-dom';
 export default function Usernavbar() {
   const auth = useAuth();
 
@@ -50,7 +50,11 @@ export default function Usernavbar() {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
+              
+              <Link className="nav-link btn" to="/profile" >
               <i className="fa-solid fa-user"></i>
+              </Link>
+            
             </li>
           </ul>
         </div>
