@@ -16,7 +16,7 @@ async function signUpForm(req, res) {
             req.body.email === undefined ||
             req.body.password === undefined ||
             req.body.preferences === undefined ||
-            req.body.preferences.dietraryRestrictions === undefined ||
+            req.body.preferences.dietaryRestrictions === undefined ||
             req.body.preferences.favouriteCuisines === undefined
         ) { 
             return res.status(400).json({message:"Enter all details properly"});
@@ -34,7 +34,7 @@ async function signUpForm(req, res) {
             email: req.body.email,
             password: hashedPassword,
             preferences: {
-                dietraryRestrictions:req.body.preferences.dietraryRestrictions,
+                dietraryRestrictions:req.body.preferences.dietaryRestrictions,
             favouriteCuisines:req.body.preferences.favouriteCuisines
         },
             favorites: null,
