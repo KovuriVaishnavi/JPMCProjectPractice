@@ -46,7 +46,7 @@ export default function RecipeForm() {
       if (response.ok) {
         alert('Recipe added successfully!');
     
-        navigate('/dashboard'); 
+        navigate('/admindashboard'); 
       } else {
         alert(result.message);
         
@@ -163,7 +163,7 @@ export default function RecipeForm() {
                   </div>
                   <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2" style={{ width: "624px", height: "780px" }}>
                     <img
-                      src="https://source.unsplash.com/random/900x700/?food"
+                      src="https://wallpaperaccess.com/full/767048.jpg"
                       className="img-fluid"
                       style={{ width: "100%", height: "100%", objectFit: "cover" }}
                       alt="Sample image"

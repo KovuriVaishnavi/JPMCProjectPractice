@@ -16,7 +16,7 @@ async function signUpForm(req, res) {
             req.body.email === undefined ||
             req.body.password === undefined ||
             req.body.preferences === undefined ||
-            req.body.preferences.dietraryRestrictions === undefined ||
+            req.body.preferences.dietaryRestrictions === undefined ||
             req.body.preferences.favouriteCuisines === undefined
         ) { 
             return res.status(400).json({message:"Enter all details properly"});
@@ -34,7 +34,7 @@ async function signUpForm(req, res) {
             email: req.body.email,
             password: hashedPassword,
             preferences: {
-                dietraryRestrictions:req.body.preferences.dietraryRestrictions,
+                dietraryRestrictions:req.body.preferences.dietaryRestrictions,
             favouriteCuisines:req.body.preferences.favouriteCuisines
         },
             favorites: null,
@@ -66,7 +66,7 @@ async function loginForm(req, res) {
             else{
                 let payload = { email:user.email};
                 const token = jwt.sign(payload, "Secret Key",{expiresIn:"1h"});
-                res.status(200).json({token:token,user:user.usertype});
+                res.status(200).json({token:token,user:user});
             } 
         }
     } catch (error) {
@@ -78,28 +78,28 @@ async function loginForm(req, res) {
 
 
 //logout
-async function logout(req, res) {
-    const token = req.headers.authorization.split(' ')[1];
-    if (!token) {
-        return res.status(401).json({ message: "Token is missing" });
-    }
-    try {
-        const decoded = jwt.verify(token, "Secret Key");
-        if (!decoded) {
-            console.log(token);
-            return res.status(401).json({ message: "Token is invalid" });
-        }
-        const blacklistedToken = await BlacklistToken.create({ token });
-        if (blacklistedToken) {
-            return res.status(200).json({ message: "User successfully logged out" });
-        } else {
-            return res.status(500).json({ message: "Failed to blacklist token" });
-        }
-    } catch (error) {
-        console.error(error);
-        return res.status(500).json({ message: "Internal Server Error" });
-    }
-}
+// async function logout(req, res) {
+//     const token = req.headers.authorization.split(' ')[1];
+//     if (!token) {
+//         return res.status(401).json({ message: "Token is missing" });
+//     }
+//     try {
+//         const decoded = jwt.verify(token, "Secret Key");
+//         if (!decoded) {
+//             console.log(token);
+//             return res.status(401).json({ message: "Token is invalid" });
+//         }
+//         const blacklistedToken = await BlacklistToken.create({ token });
+//         if (blacklistedToken) {
+//             return res.status(200).json({ message: "User successfully logged out" });
+//         } else {
+//             return res.status(500).json({ message: "Failed to blacklist token" });
+//         }
+//     } catch (error) {
+//         console.error(error);
+//         return res.status(500).json({ message: "Internal Server Error" });
+//     }
+// }
 
 
 
@@ -147,14 +147,14 @@ async function likeRecipe(req,res){
     const user=await userModel.findById(req.params.id);
     let likes=user.likes||[];
     if(likes.length>0 && likes.includes(recipeId)){
-        recipeIndex=likes.indexOf(recipeId)
+        const recipeIndex=likes.indexOf(recipeId)
         likes.splice(recipeIndex,1);
         user.likes=likes;
         await user.save()
         const recipe=await recipeModel.findById(recipeId);
         recipe.likes--;
         await recipe.save();
-        res.status(200).json({message:"dislike successful!"})
+        res.status(200).json({isLiked:false});
     }
     else{
     likes.push(recipeId);
@@ -163,7 +163,7 @@ async function likeRecipe(req,res){
     let noOfLikes=recipe.likes;
     noOfLikes++;
     const recipe1=await recipeModel.findByIdAndUpdate(recipeId,{likes:noOfLikes});
-    res.status(200).json({message:"thanks for your like!"});
+    res.status(200).json({isLiked:true});
     }
 }
 
@@ -174,37 +174,38 @@ async function addFavouriteRecipe(req,res){
     const user=await userModel.findById(req.params.id);
     let favorites=user.favorites||[];
     if(favorites.length>0 && favorites.includes(recipeId)){
-        recipeIndex=favorites.indexOf(recipeId)
+        const recipeIndex=favorites.indexOf(recipeId)
         favorites.splice(recipeIndex,1);
         user.favorites=favorites;
         await user.save()
-        return res.status(200).json({message:"removed from favorites"})
+        return res.status(200).json({isFavorited:false})
     }
     favorites.push(recipeId);
     const user1=await userModel.findByIdAndUpdate(req.params.id,{favorites:favorites});
-    return res.status(200).json({message:"added to favorites successfully"})
+    return res.status(200).json({isFavorited:true});
 }
-
 
 //add comment
 async function addComment(req, res) {
-    const { id } = req.params;
+    const { id } = req.params; 
+    const { recipeId, comment } = req.body; 
+
     try {
-        const recipeId = req.body.recipeId;
+        const userId = req.body.userId;
         const comment = req.body.comment;
         let newComment = {
-            user: id, 
+            user: userId, 
             comment: comment,
             timestamp: Date.now()
         };
-        const recipe = await recipeModel.findById(recipeId);
+        const recipe = await recipeModel.findById(id);
         if (!recipe) {
             return res.status(404).json({ message: "Recipe not found" });
         }
         let comments = recipe.comments || []; 
         comments.push(newComment);
         const updatedRecipe = await recipeModel.findByIdAndUpdate(
-            recipeId,
+             id,
             { comments: comments },
             { new: true } 
         );
@@ -214,8 +215,6 @@ async function addComment(req, res) {
         res.status(500).json({ message: "Internal server error" });
     }
 }
-
-
 
 //remove comment
 async function removeComment(req, res) {
@@ -261,7 +260,24 @@ catch(error){
 }
 
 
+const getuserdetails = async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const user = await userModel.findById(userId).lean(); // Using lean() for better performance as it returns plain JavaScript objects
+      if (!user) {
+        return res.status(404).json({ message: "User not found!" });
+      }
+      res.status(200).json(user);
+    } catch (error) {
+      console.error("Error fetching user details:", error);
+      res.status(500).json({ message: "Internal server error" });
+    }
+  };
+  
+  module.exports = { getuserdetails };
+  
 
-module.exports={signUpForm,loginForm,logout,getPreference,updatePreference,likeRecipe,addFavouriteRecipe,addComment,rateRecipe,removeComment};
+
+module.exports={signUpForm,loginForm,getPreference,updatePreference,likeRecipe,addFavouriteRecipe,addComment,rateRecipe,removeComment,getuserdetails};
 
 

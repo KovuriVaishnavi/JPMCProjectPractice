@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '../context/authentication';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/authentication';
 function Login() {
   const navigate = useNavigate();
     const auth = useAuth();
@@ -13,21 +12,20 @@ function Login() {
         if (auth.loginAction) {
             try {
                 const user = await auth.loginAction({ email, password });
-                if (user === 1) {
-                    console.log('from login admin');
+                if (user.usertype === 1) {
                     navigate('/admindashboard');
-                } else if (user ===0) {
-                    console.log('from login user');
+                } else if ( user.usertype ===0) {
                     navigate('/userdashboard');
                 }
             } catch (error) {
+                alert('invalid username or password')
                 console.error("Login failed", error);
             }
-        } else {
-            console.error("Auth object or loginAction method is not available.");
+        } 
+        else{
+            console.error("no loginaction available")
         }
     }
-
     return (
         <section className="vh-100" style={{ backgroundColor: "#eee" }}>
             <div className="container h-100">

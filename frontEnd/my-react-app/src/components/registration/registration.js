@@ -9,12 +9,39 @@ export default function Register() {
     email: '',
     password: '',
     preferences: {
-      dietraryRestrictions: '',
-      favouriteCuisines: '',
+      dietaryRestrictions: [],
+      favouriteCuisines: [],
     },
     usertype: false,
   });
   const [error, setError] = useState('');
+
+  const dietaryRestrictionsOptions = [
+    "Vegan", "Non-Vegetarian", "Pescetarian", "Gluten-Free", "Dairy-Free", "Nut-Free", "Diabetes"
+  ];
+
+  const favouriteCuisinesOptions = [
+    "Italian", "American", "Asian", "Chinese", "Japanese", "Indian", "Mexican", "South Western"
+  ];
+
+  const handleCheckboxChange = (e, category) => {
+    const { name, checked } = e.target;
+    setFormData((prevState) => {
+      let updatedPreferences = [...prevState.preferences[category]];
+      if (checked && !updatedPreferences.includes(name)) {
+        updatedPreferences.push(name);
+      } else if (!checked && updatedPreferences.includes(name)) {
+        updatedPreferences = updatedPreferences.filter(item => item !== name);
+      }
+      return {
+        ...prevState,
+        preferences: {
+          ...prevState.preferences,
+          [category]: updatedPreferences,
+        },
+      };
+    });
+  };
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -23,15 +50,6 @@ export default function Register() {
         return {
           ...prevState,
           [name]: checked,
-        };
-      }
-      if (name === 'dietraryRestrictions' || name === 'favouriteCuisines') {
-        return {
-          ...prevState,
-          preferences: {
-            ...prevState.preferences,
-            [name]: value,
-          },
         };
       }
       return {
@@ -48,32 +66,25 @@ export default function Register() {
       setError('Name, Email, and Password are required fields.');
       return;
     }
-
-    const dietaryRestrictionsArray = preferences.dietraryRestrictions
-      ? preferences.dietraryRestrictions.split(',').map((item) => item.trim())
-      : [];
-    const favouriteCuisinesArray = preferences.favouriteCuisines
-      ? preferences.favouriteCuisines.split(',').map((item) => item.trim())
-      : [];
-
-    const updatedFormData = {
-      ...formData,
-      preferences: {
-        dietraryRestrictions: dietaryRestrictionsArray,
-        favouriteCuisines: favouriteCuisinesArray,
-      },
-      usertype: usertype ? 1 : 0,
-    };
-
+      
     try {
       const response = await fetch('http://localhost:3001/api/auth/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedFormData),
+        body: JSON.stringify({
+          username,
+          email,
+          password,
+          preferences: {
+            dietaryRestrictions: preferences.dietaryRestrictions,
+            favouriteCuisines: preferences.favouriteCuisines,
+          },
+          usertype: usertype ? 1 : 0,
+        }),
       });
-
+     
       const result = await response.json();
       if (response.ok) {
         alert(result.message);
@@ -156,18 +167,22 @@ export default function Register() {
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-utensils fa-lg me-3 fa-fw" style={{ color: '#FFA500' }} />
                         <div className="form-outline flex-fill mb-0">
-                          <label htmlFor="dietraryRestrictions" style={{ color: '#FFA900' }}>
+                          <label htmlFor="dietaryRestrictions" style={{ color: '#FFA900' }}>
                             Dietary Restrictions
                           </label>
-                          <input
-                            type="text"
-                            id="dietraryRestrictions"
-                            name="dietraryRestrictions"
-                            className="form-control"
-                            placeholder="Enter dietary restrictions, separated by commas"
-                            value={formData.preferences.dietraryRestrictions || ''}
-                            onChange={handleChange}
-                          />
+                          <div>
+                            {dietaryRestrictionsOptions.map((option) => (
+                              <div key={option}>
+                                <input
+                                  type="checkbox"
+                                  name={option}
+                                  checked={formData.preferences.dietaryRestrictions.includes(option)}
+                                  onChange={(e) => handleCheckboxChange(e, 'dietaryRestrictions')}
+                                />
+                                <label>{option}</label>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
@@ -176,15 +191,19 @@ export default function Register() {
                           <label htmlFor="favouriteCuisines" style={{ color: '#FFA900' }}>
                             Favourite Cuisines
                           </label>
-                          <input
-                            type="text"
-                            id="favouriteCuisines"
-                            name="favouriteCuisines"
-                            className="form-control"
-                            placeholder="Enter favourite cuisines, separated by commas"
-                            value={formData.preferences.favouriteCuisines || ''}
-                            onChange={handleChange}
-                          />
+                          <div>
+                            {favouriteCuisinesOptions.map((option) => (
+                              <div key={option}>
+                                <input
+                                  type="checkbox"
+                                  name={option}
+                                  checked={formData.preferences.favouriteCuisines.includes(option)}
+                                  onChange={(e) => handleCheckboxChange(e, 'favouriteCuisines')}
+                                />
+                                <label>{option}</label>
+                              </div>
+                            ))}
+                          </div>
                         </div>
                       </div>
                       <div className="form-check d-flex justify-content-center mb-5">
