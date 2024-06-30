@@ -14,7 +14,7 @@
   
   .navbar-item {
     padding: 0 20px; 
-    color: white;
+    color: black;
     cursor: pointer;
     height: 100%;
     display: flex; 
@@ -23,6 +23,7 @@
   
   .navbar-item:hover {
     background-color: #1d1c1c;
+    color:white
   }
   
   .navbar-item:first-child {

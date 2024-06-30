@@ -109,7 +109,6 @@
   /* Styling for list items (ingredients and comments) */
   .recipe-extra ul li,
   .comment li {
-    font-family: 'Dancing Script', cursive;
     font-size: 25px;
     margin: 10px 0;
     display: flex;
@@ -133,7 +132,7 @@
   
   /* Styling for instructions */
   .instructions {
-    font-family: 'Dancing Script', cursive;
+
     font-size: 25px;
     margin: 20px 0;
   }
@@ -165,4 +164,22 @@
 }
 .someclass:active {
     transform: scale(1.25);
+}
+/* showRecipe.css */
+
+.recipe-image img {
+  width: 600px; /* Set your desired width */
+  height: 300px; /* Set your desired height */
+  object-fit: cover; /* Ensures the image covers the entire area without distortion */
+}
+.no-underline-link {
+  color: inherit; /* Inherits the color from the parent */
+  text-decoration: none; 
+  color:green;/* Removes the underline */
+  font-size: 15px;
+}
+
+.no-underline-link:hover {
+  cursor: pointer;
+  background-color: #ccc;
 }

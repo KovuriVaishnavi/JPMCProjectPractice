@@ -3,8 +3,10 @@ import 'bootstrap/dist/css/bootstrap.min.css'; // Bootstrap CSS
 import React from 'react';
 import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
 import './App.css';
+import ProfilePage from './components/ProfilePage/ProfilePage.js';
 import RecipeForm from './components/RecipeForm/RecipeForm.js';
 import SearchResults from './components/SearchComponent/searchComponent.js';
+import UserDetail from './components/ShowRecipe/UserDetail.js';
 import ShowRecipe from './components/ShowRecipe/showRecipe.js';
 import Admindashboard from './components/admindashboard/admindashboard.js';
 import Home from './components/home/home.js';
@@ -40,9 +42,11 @@ class App extends React.Component {
           <Route path='/userdashboard' exact element={<Userdashboard/>}></Route>
           </Route >
           
-          <Route path='/search/:name' exact element={<SearchResults/>}> </Route>
-           
+          <Route path='/search/:criteria/:term' exact element={<SearchResults/>}> </Route>
+           <Route path='/user/:id' exact element={<UserDetail/>}></Route>
+           <Route path='/profile' exact element={<ProfilePage/>}></Route>
         </Routes>
+
          </AuthProvider>
       </Router>
    

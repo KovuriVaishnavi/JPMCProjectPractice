@@ -9,62 +9,63 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [userDetails, setUserDetails] = useState({});
     const navigate = useNavigate(); 
+
     const loginAction = async (data) => {
         try {
             const response = await axios.post("http://localhost:3001/api/auth/login", { ...data });
             console.log('Response data:', response.data);
     
-            const { token, user, userDetails } = response.data;
-    
-            // Ensure userDetails is valid before storing
-            if (userDetails && typeof userDetails === 'object') {
-                setUserDetails(userDetails);  // assuming userDetails is an object
-                localStorage.setItem("userDetails", JSON.stringify(userDetails));
-            } else {
-                console.error('Invalid userDetails received:', userDetails);
-                setUserDetails({});
-                localStorage.setItem("userDetails", JSON.stringify({}));
-            }
+            const { token, user, userDetails } = response.data;  // Ensure userDetails is included in the response
     
             setToken(token);
             setUser(user);
+            setUserDetails(userDetails);  // Set userDetails
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("userDetails", JSON.stringify(userDetails));  // Store userDetails in localStorage
     
             return user;
         } catch (err) {
             console.error('Login error:', err);
         }
     };
-    
 
     useEffect(() => {
         const savedToken = localStorage.getItem("token");
         const savedUser = localStorage.getItem("user");
-        const savedUserDetails = localStorage.getItem("userDetails");  // retrieve userDetails
+        const savedUserDetails = localStorage.getItem("userDetails");  // Retrieve userDetails from localStorage
+
         if (savedToken) {
-          setToken(savedToken);
+            setToken(savedToken);
         }
         if (savedUser) {
-          setUser(JSON.parse(savedUser));
+            try {
+                setUser(JSON.parse(savedUser));  // Parse and set user if savedUser is valid JSON
+            } catch (error) {
+                console.error('Error parsing saved user:', error);
+                setUser(null);  // Reset user if parsing fails
+            }
         }
         if (savedUserDetails) {
             try {
-              setUserDetails(JSON.parse(savedUserDetails));
+                if (savedUserDetails !== "undefined" && savedUserDetails !== null) {
+                    setUserDetails(JSON.parse(savedUserDetails));  // Parse and set userDetails
+                }
             } catch (error) {
-              console.error('Error parsing saved user details:', error);
-              setUserDetails({});
+                console.error('Error parsing saved user details:', error);
+                setUserDetails({});  // Reset userDetails if parsing fails
             }
-          }
+        }
     }, []);
      
     const logOut = async () => {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
-        localStorage.removeItem("userDetails");  // remove userDetails
+        localStorage.removeItem("userDetails");  // Remove userDetails from localStorage
+
         setToken(null);
         setUser(null);
-        setUserDetails({});  // reset userDetails
+        setUserDetails({});  // Reset userDetails
         navigate('/'); 
         console.log('Token and user details removed from localStorage');
     }

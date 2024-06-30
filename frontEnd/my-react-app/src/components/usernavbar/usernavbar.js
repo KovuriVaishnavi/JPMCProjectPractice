@@ -52,7 +52,7 @@ export default function Usernavbar() {
           </ul>
           <ul className="navbar-nav">
             <li className="nav-item">
-              <i className="fa-solid fa-user"></i>
+              <i className="fa-solid fa-user" onClick={()=>navigate('/profile')}></i>
             </li>
           </ul>
         </div>

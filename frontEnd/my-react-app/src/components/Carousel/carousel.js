@@ -1,29 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Carousel.css';
 
 export default function Carousel({ onSearch }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchCriteria, setSearchCriteria] = useState('name');
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
-    navigate(`/search/${searchTerm}`);
+    navigate(`/search/${searchCriteria}/${searchTerm}`);
   };
-
-  useEffect(() => {
-    const textElements = document.querySelectorAll('.carousel-item .carousel-text');
-    textElements.forEach((element) => {
-      element.classList.add('fade-in');
-    });
-  }, []);
 
   return (
     <div className="carousel-container">
       <div id="carouselExampleFade" className="carousel slide carousel-fade" data-bs-ride="carousel">
-        <div className="carousel-inner">
+        <div className="carousel-inner" id="carousel">
           <div className="carousel-caption">
-            <form className="d-flex justify-content-center" onSubmit={handleSearch}>
+            <form className="d-flex" onSubmit={handleSearch}>
+              <select
+                className="form-select me-2"
+                value={searchCriteria}
+                onChange={(e) => setSearchCriteria(e.target.value)}
+                style={{width:'30px'}}
+              >
+                <option value="name">Name</option>
+                <option value="ingredient">Ingredients</option>
+                <option value="cuisine">Cuisines</option>
+              </select>
               <input
                 className="form-control me-2"
                 type="search"
@@ -32,12 +38,23 @@ export default function Carousel({ onSearch }) {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
-              <button className="btn btn-yellow text-white" type="submit">
+              <button className="btn btn-outline-success text-white bg-success" type="submit">
                 Search
               </button>
             </form>
           </div>
           <div className="carousel-item active">
+            <img
+              src="https://www.archanaskitchen.com/images/archanaskitchen/1-Author/priyanjali/shutterstock_111998606.jpg"
+              className="d-block w-100"
+              alt="..."
+            />
+            <div className="carousel-text">
+              <div className="main-text">Discover New Recipes</div>
+              <div className="sub-text">Explore a variety of dishes from around the world.</div>
+            </div>
+          </div>
+          <div className="carousel-item">
             <img
               src="https://img.freepik.com/free-photo/top-view-delicious-mayyonaise-salad-with-greens-vegetables-dark-space_140725-75694.jpg"
               className="d-block w-100"
@@ -45,12 +62,12 @@ export default function Carousel({ onSearch }) {
             />
             <div className="carousel-text">
               <div className="main-text">Welcome to RecipeRadar!</div>
-              <div className="sub-text">We are dedicated to bringing you the best recipes from around the world.</div>
+              <div className="sub-text">We are dedicated to bring you the best recipes from all over the world</div>
             </div>
           </div>
           <div className="carousel-item">
             <img
-              src="https://i.ytimg.com/vi/u54aQPzwbWc/maxresdefault.jpg"
+              src="https://www.godubrovnik.com/wp-content/uploads/pizza.jpg"
               className="d-block w-100"
               alt="..."
             />
@@ -59,23 +76,22 @@ export default function Carousel({ onSearch }) {
               <div className="sub-text">Share and discover new recipes, tips, and culinary adventures.</div>
             </div>
           </div>
-          <div className="carousel-item">
-            <img
-              src="https://www.thestatesman.com/wp-content/uploads/2020/01/vf-4.jpg"
-              className="d-block w-100"
-              alt="..."
-            />
-            <div className="carousel-text">
-              <div className="main-text">Explore Our Recipes</div>
-              <div className="sub-text">From quick and easy meals to gourmet dishes. Happy cooking!</div>
-            </div>
-          </div>
         </div>
-        <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+        <button
+          className="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="prev"
+        >
           <span className="carousel-control-prev-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Previous</span>
         </button>
-        <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+        <button
+          className="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleFade"
+          data-bs-slide="next"
+        >
           <span className="carousel-control-next-icon" aria-hidden="true"></span>
           <span className="visually-hidden">Next</span>
         </button>

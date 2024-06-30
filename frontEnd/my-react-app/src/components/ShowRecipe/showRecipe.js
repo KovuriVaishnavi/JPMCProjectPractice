@@ -1,11 +1,14 @@
 import axios from 'axios';
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import RateRecipe from '../RateRecipe/RateRecipe';
 import RatingShow from '../RatingShow/RatingShow';
 import './showRecipe.css'; // Import the CSS file
 function ShowRecipe() {
   const [recipe, setRecipe] = useState();
+  const [userDetailsMap, setUserDetailsMap] = useState({});
   const { id } = useParams();
+  const navigate = useNavigate();
   const userDetailsString = localStorage.getItem('userDetails');
   const userDetails = userDetailsString ? JSON.parse(userDetailsString) : {}; // Parse JSON if available, or default to an empty object
   const userId = userDetails._id;
@@ -13,15 +16,19 @@ function ShowRecipe() {
   const [commentAdded, setCommentAdded] = useState(false); // State to trigger comment section refresh
   const [islike, setislike] = useState(false);
   const [isfavorite, setisfavorite] = useState(false);
-  const [showcomments,setshowcomments]=useState(false);
-  const [text,settext]=useState("see comments")
-
+  const [showcomments, setshowcomments] = useState(false);
+  const [text, settext] = useState("see comments");
+  const [hasRated, setHasRated] = useState(true);
   // Fetch recipe details on initial render and whenever id changes
   useEffect(() => {
     if (userId && id) {
       axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
         .then(response => {
           setRecipe(response.data);
+          const userRating = response.data.Rating.find(r => r._id === userId);
+              if (userRating) {
+                setHasRated(false);
+              }
         })
         .catch(error => {
           console.error('Error fetching recipe details:', error);
@@ -39,8 +46,7 @@ function ShowRecipe() {
           console.error('Error fetching user details:', error);
         });
     }
-
-  }, [userId, id,commentAdded,showcomments,settext]);
+  }, [userId, id, commentAdded, showcomments, settext]);
 
   // Handle like functionality
   function handleLike() {
@@ -49,6 +55,7 @@ function ShowRecipe() {
         .then(res => {
           console.log(res.data);
           setislike(!islike);
+         
           // Optionally update UI based on like/unlike response
         })
         .catch(error => {
@@ -58,17 +65,13 @@ function ShowRecipe() {
   }
 
   function toggleComments() {
-    if(showcomments)
-      {
-        settext("see comments");
-      }
-      else{
-        settext("hide comments");
-      }
+    if (showcomments) {
+      settext("see comments");
+    } else {
+      settext("hide comments");
+    }
     setshowcomments(!showcomments);
-
   }
-
 
   // Handle favorite functionality
   function handleFavorite() {
@@ -105,13 +108,43 @@ function ShowRecipe() {
       });
   }
 
-
+  // Fetch user details for each comment
+  useEffect(() => {
+    if (recipe && recipe.comments) {
+      recipe.comments.forEach(comment => {
+        if (comment && comment.user && !userDetailsMap[comment.user]) {
+          axios.get(`http://localhost:3001/api/user/getdetails/${comment.user}`)
+            .then(response => {
+              setUserDetailsMap(prevMap => ({
+                ...prevMap,
+                [comment.user]: response.data.username
+              }));
+              
+            })
+            .catch(error => {
+              console.error('Error fetching user details:', error);
+            });
+        }
+      });
+    }
+  }, [recipe, userDetailsMap]);
 
   // Scroll to comments section
   function handleReadMoreClick(event) {
     event.preventDefault();
     const commentsSection = document.getElementById("comments-section");
     commentsSection.scrollIntoView({ behavior: "smooth" });
+  }
+
+  // Navigate to user detail page
+  function handleUsernameClick(userId) {
+    axios.get(`http://localhost:3001/api/user/getdetails/${userId}`)
+      .then(response => {
+        navigate(`/user/${userId}`, { state: { user: response.data } });
+      })
+      .catch(error => {
+        console.error('Error fetching user details:', error);
+      });
   }
 
   return (
@@ -125,10 +158,12 @@ function ShowRecipe() {
           <div className="recipe-comments">
             {recipe && recipe.comments && recipe.comments.length > 0 && (
               <p>
-                {recipe.comments&& recipe.comments[0]&&recipe.comments[0].comment&&recipe.comments[0].comment}..........
-                {recipe.comments.length > 0 && <a href="#" className="read-more" onClick={handleReadMoreClick}>Read More</a>}
+                {recipe.comments && recipe.comments[0] && recipe.comments[0].comment && recipe.comments[0].comment}..........
+                {recipe.comments.length > 0 && <a href="#" className="read-more no-underline-link" onClick={handleReadMoreClick} >Read More</a>}
               </p>
             )}
+          </div>
+          <div>
           </div>
           <div className="recipe-ingredients-count">
             {recipe && recipe.ingredients && <p>{recipe.ingredients.length} ingredients</p>}
@@ -173,19 +208,24 @@ function ShowRecipe() {
             className="editable-comment"
             onInput={(event) => setComment(event.target.innerText)}
           />
-          <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
-          <button onClick={handleCommentSubmit} className='btn' style={{ backgroundColor: 'orange' }}>Submit Comment</button>
-          <button onClick={toggleComments} className='btn' style={{backgroundColor:'orange'}}>{text}</button>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <button onClick={handleCommentSubmit} className='btn' style={{ backgroundColor: 'orange' }}>Submit Comment</button>
+            <button onClick={toggleComments} className='btn' style={{ backgroundColor: 'orange' }}>{text}</button>
           </div>
           {showcomments && recipe && recipe.comments && recipe.comments.length > 0 && recipe.comments.map((comment, index) => (
             <div key={index} className="comment">
               <hr className="divider" />
-              <li>{comment && comment._id && comment._id}</li>
+              <li>
+                <a href="#" className='no-underline-link'onClick={() => handleUsernameClick(comment.user)}>
+                  {userDetailsMap[comment.user] || comment.user}
+                </a>
+              </li>
               <li>{comment && comment.comment && comment.comment}</li>
             </div>
           ))}
-          
-          
+          {hasRated && (
+            <RateRecipe recipeId={id} userId={userId} />
+          )}
         </div>
       </div>
     </div>
