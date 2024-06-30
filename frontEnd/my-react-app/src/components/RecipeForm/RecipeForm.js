@@ -1,3 +1,4 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,7 +11,7 @@ export default function RecipeForm() {
     difficulty: '',
     image: '',
   });
- 
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -28,7 +29,7 @@ export default function RecipeForm() {
       alert('All fields are required.');
       return;
     }
-    
+
     const formDataWithArray = {
       ...formData,
       ingredients: formData.ingredients.split(',').map(item => item.trim()),
@@ -45,15 +46,12 @@ export default function RecipeForm() {
       const result = await response.json();
       if (response.ok) {
         alert('Recipe added successfully!');
-    
-        navigate('/admindashboard'); 
+        navigate('/admindashboard');
       } else {
         alert(result.message);
-        
       }
     } catch (error) {
       alert('An error occurred. Please try again.');
-      
     }
   };
 
@@ -72,7 +70,7 @@ export default function RecipeForm() {
                     <form className="mx-1 mx-md-4" onSubmit={handleSubmit}>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-utensils me-3" style={{fontSize:"25px", color:"orange"}}/>
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <input
                             type="text"
                             name="name"
@@ -85,12 +83,12 @@ export default function RecipeForm() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-list me-3" style={{fontSize:"25px", color:"orange"}}/>
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <textarea
                             name="ingredients"
                             className="form-control"
                             rows="4"
-                            placeholder="Enter ingredients (enter comma separated list)"
+                            placeholder="Enter ingredients (comma separated)"
                             value={formData.ingredients}
                             onChange={handleChange}
                           />
@@ -98,7 +96,7 @@ export default function RecipeForm() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-lightbulb me-3" style={{fontSize:"25px", color:"orange"}}/>
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <textarea
                             name="instructions"
                             className="form-control"
@@ -111,7 +109,7 @@ export default function RecipeForm() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-bowl-food me-3" style={{fontSize:"25px", color:"orange"}}/>
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <input
                             type="text"
                             name="cuisine"
@@ -124,7 +122,7 @@ export default function RecipeForm() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-triangle-exclamation me-3" style={{fontSize:"25px", color:"orange"}} />
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <input
                             type="text"
                             name="difficulty"
@@ -137,7 +135,7 @@ export default function RecipeForm() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fa-solid fa-image me-3" style={{fontSize:"25px", color:"orange"}} />
-                        <div data-mdb-input-init="" className="form-outline flex-fill mb-0">
+                        <div className="form-outline flex-fill mb-0">
                           <input
                             type="text"
                             name="image"
@@ -151,21 +149,18 @@ export default function RecipeForm() {
                       <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                         <button
                           type="submit"
-                          data-mdb-button-init=""
-                          data-mdb-ripple-init=""
                           className="btn btn-lg" style={{backgroundColor:"orange"}}
                         >
                           Add Recipe
                         </button>
                       </div>
-                      
                     </form>
                   </div>
-                  <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2" style={{ width: "624px", height: "780px" }}>
+                  <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
                     <img
                       src="https://wallpaperaccess.com/full/767048.jpg"
                       className="img-fluid"
-                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: '25px' }}
                       alt="Sample image"
                     />
                   </div>
