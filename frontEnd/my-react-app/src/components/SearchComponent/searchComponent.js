@@ -23,8 +23,8 @@ export default function SearchResults() {
 
   return (
 
-    <div className="container mt-4">
-      <h2 className="text-center mb-4">Searched Items</h2>
+    <div className="container mt-4 userdashboard" id="userdashboard">
+      <h2 className="text-center mb-4">RECIPES FOR {`${term}`}</h2>
       <div className="d-flex flex-wrap justify-content-around">
         {recipes.length === 0 ? (
           <p>No results found for "{term}".</p>
@@ -32,7 +32,7 @@ export default function SearchResults() {
           recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
               <div className="grid-item mb-3" style={{ width: "236px", height: "375px", borderRadius:'0'}}>
-                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} image={recipe.image} />
+              <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image}/>
               </div>
             </Link>
           ))
