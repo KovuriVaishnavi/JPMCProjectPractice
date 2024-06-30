@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './homenavbar.css';
-
 export default function HomeNavbar() {
+  const navigate=useNavigate();
   return (
     <nav className="navbar navbar-expand-lg navbar-light">
       <div className="container-fluid">
@@ -21,12 +21,12 @@ export default function HomeNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#userdashboard">
+              <a className="nav-link active" aria-current="page" onClick={() => navigate('/')}>
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#contactus">
+              <a className="nav-link" href="#carouselExampleFade">
                 About Us
               </a>
             </li>

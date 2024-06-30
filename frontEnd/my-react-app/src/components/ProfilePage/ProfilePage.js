@@ -1,10 +1,11 @@
 import CameraAltOutlinedIcon from '@mui/icons-material/CameraAltOutlined';
 import React, { useState } from 'react';
+import { useAuth } from '../../context/authentication';
 import ProfileNavBar from '../ProfileNavbar/ProfileNavBar';
 import UserPreferences from '../UserPreferences/UserPreferences';
+import ShowFavorites from '../showFavorites/showFavorites';
 import './ProfilePage.css';
-import { useAuth } from '../../context/authentication';
-import ShowFavorites from '../showFavorites/showFavourites';
+import ShowLiked from '../showLiked/showLiked';
 const ProfilePage = () => {
   const auth = useAuth();
   const [showPreferences, setShowPreferences] = useState(false);
@@ -22,7 +23,7 @@ const ProfilePage = () => {
     <div className="home-container">
       <div className="content">
         <div className="image-container">
-          <img src={'https://source.unsplash.com/random/900×700/?blankprofilephoto'} alt="Profile" className="home-logo" style={{ width: '90%', height: '90%' }} />
+          <img src={'https://tse2.mm.bing.net/th?id=OIP.yYUwl3GDU07Q5J5ttyW9fQHaHa&pid=Api&P=0&h=180'} alt="Profile" className="home-logo" style={{ width: '90%', height: '90%' }} />
           <div className="icon-overlay">
             <CameraAltOutlinedIcon fontSize="large" />
           </div>
@@ -34,6 +35,7 @@ const ProfilePage = () => {
         <ProfileNavBar onPreferencesClick={handlePreferencesClick} />
         {view === 'preferences' && showPreferences && <UserPreferences />}
         {view === 'favourites' && <ShowFavorites/> }
+        {view === 'liked' && <ShowLiked/>}
       </div>
     </div>
   );

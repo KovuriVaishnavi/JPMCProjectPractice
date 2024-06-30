@@ -31,8 +31,8 @@ export default function SearchResults() {
         ) : (
           recipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
-              <div className="grid-item mb-3" style={{ width: "236px", height: "375px" }}>
-                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+              <div className="grid-item mb-3" style={{ width: "236px", height: "375px", borderRadius:'0'}}>
+                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} image={recipe.image} />
               </div>
             </Link>
           ))

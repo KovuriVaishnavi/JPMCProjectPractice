@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [userDetails, setUserDetails] = useState({});
     const navigate = useNavigate(); 
+
     const loginAction = async (data) => {
         try {
             const response = await axios.post("http://localhost:3001/api/auth/login", { ...data });
@@ -19,24 +20,30 @@ const AuthProvider = ({ children }) => {
     
             setToken(token);
             setUser(user);
+            setUserDetails(userDetails);  // Set userDetails
             localStorage.setItem("token", token);
             localStorage.setItem("user", JSON.stringify(user));
+            localStorage.setItem("userDetails", JSON.stringify(userDetails));  // Store userDetails in localStorage
     
             return user;
         } catch (err) {
             console.error('Login error:', err);
         }
     };
-    
 
     useEffect(() => {
         const savedToken = localStorage.getItem("token");
         const savedUser = localStorage.getItem("user");  
         if (savedToken) {
-          setToken(savedToken);
+            setToken(savedToken);
         }
         if (savedUser) {
-          setUser(JSON.parse(savedUser));
+            try {
+                setUser(JSON.parse(savedUser));  // Parse and set user if savedUser is valid JSON
+            } catch (error) {
+                console.error('Error parsing saved user:', error);
+                setUser(null);  // Reset user if parsing fails
+            }
         }
         
     }, []);

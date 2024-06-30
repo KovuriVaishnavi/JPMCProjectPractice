@@ -67,6 +67,7 @@ function Login() {
                                             </div>
                                             <div className="form-check d-flex justify-content-center mb-5">
                                                 <p>Don't have an account? <Link to='/register'>Sign up</Link></p>
+                                                <p>Or go to <Link to='/'>Home</Link></p>
                                             </div>
                                             <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
                                                 <button
