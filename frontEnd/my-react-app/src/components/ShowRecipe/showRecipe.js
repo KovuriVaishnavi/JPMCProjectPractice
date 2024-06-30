@@ -1,114 +1,117 @@
 import axios from 'axios';
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import RateRecipe from '../RateRecipe/RateRecipe';
 import RatingShow from '../RatingShow/RatingShow';
-import './showRecipe.css'; // Import the CSS file
+import './showRecipe.css';
+
 function ShowRecipe() {
-  const [recipe, setRecipe] = useState();
-  const [userDetailsMap, setUserDetailsMap] = useState({});
+  const [recipe, setRecipe] = useState(null);
+  const [comment, setComment] = useState('');
   const { id } = useParams();
-  const navigate = useNavigate();
-  const userDetailsString = localStorage.getItem('userDetails');
-  const userDetails = userDetailsString ? JSON.parse(userDetailsString) : {}; // Parse JSON if available, or default to an empty object
-  const userId = userDetails._id;
-  const [comment, setComment] = useState("");
-  const [commentAdded, setCommentAdded] = useState(false); // State to trigger comment section refresh
-  const [islike, setislike] = useState(false);
-  const [isfavorite, setisfavorite] = useState(false);
-  const [showcomments, setshowcomments] = useState(false);
-  const [text, settext] = useState("see comments");
-  const [hasRated, setHasRated] = useState(true);
-  // Fetch recipe details on initial render and whenever id changes
+  const [isLiked, setIsLiked] = useState(false);
+  const [isFavorited, setIsFavorited] = useState(false);
+  const [averageRating, setAverageRating] = useState(0);
+  const [userDetailsMap, setUserDetailsMap] = useState({});
+
   useEffect(() => {
-    if (userId && id) {
-      axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
-        .then(response => {
-          setRecipe(response.data);
-          const userRating = response.data.Rating.find(r => r._id === userId);
-              if (userRating) {
-                setHasRated(false);
-              }
-        })
-        .catch(error => {
-          console.error('Error fetching recipe details:', error);
-        });
-    }
-
-    if (userId) {
-      axios.get(`http://localhost:3001/api/user/getdetails/${userId}`)
-        .then(response => {
-          const user = response.data;
-          setislike(user.likes && user.likes.includes(id));
-          setisfavorite(user.favorites && user.favorites.includes(id));
-        })
-        .catch(error => {
-          console.error('Error fetching user details:', error);
-        });
-    }
-  }, [userId, id, commentAdded, showcomments, settext]);
-
-  // Handle like functionality
-  function handleLike() {
-    if (userId && recipe) {
-      axios.post(`http://localhost:3001/api/recipes/${userId}/like`, { recipeId: id })
-        .then(res => {
-          console.log(res.data);
-          setislike(!islike);
-         
-          // Optionally update UI based on like/unlike response
-        })
-        .catch(error => {
-          console.error('Error liking recipe:', error);
-        });
-    }
-  }
-
-  function toggleComments() {
-    if (showcomments) {
-      settext("see comments");
-    } else {
-      settext("hide comments");
-    }
-    setshowcomments(!showcomments);
-  }
-
-  // Handle favorite functionality
-  function handleFavorite() {
-    if (userId && id) {
-      axios.post(`http://localhost:3001/api/recipes/${userId}/favorite`, { recipeId: id })
-        .then(res => {
-          console.log(res.data);
-          setisfavorite(!isfavorite);
-        })
-        .catch(error => {
-          console.error('Error liking recipe:', error);
-        });
-    }
-  }
-
-  // Handle comment submission
-  function handleCommentSubmit() {
-    if (comment.trim() === "") {
-      return;
-    }
-    axios.post(`http://localhost:3001/api/recipes/${userId}/addcomment`, { recipeId: id, comment: comment })
-      .then(res => {
-        console.log(res.data);
-        setRecipe(prevRecipe => ({
-          ...prevRecipe,
-          comments: [...prevRecipe.comments, res.data.comment]
-        }));
-        setComment("");
-        setCommentAdded(!commentAdded); 
-        document.querySelector(".editable-comment").innerHTML = "";// Trigger re-render of comments section
+    axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
+      .then(response => {
+        setRecipe(response.data);
+        setAverageRating(response.data.averageRating)
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+          if (user.likes && user.likes.includes(id)) setIsLiked(true);
+          if (user.favorites && user.favorites.includes(id)) setIsFavorited(true);
+        }
       })
-      .catch(error => {
-        console.error('Error adding comment:', error);
-      });
-  }
+      .catch(error => console.error('Error fetching recipe:', error));
 
-  // Fetch user details for each comment
+}, [id]);
+
+  const handleReadMoreClick = (event) => {
+    event.preventDefault();
+    const commentsSection = document.getElementById('comments-section');
+    commentsSection.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handleCommentChange = (event) => {
+    setComment(event.target.value);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.post(`http://localhost:3001/api/recipes/${id}/addcomment`, {
+        userId: JSON.parse(localStorage.getItem('user'))._id,
+        comment: comment,
+      })
+        .then(() => {
+          setComment('');
+          axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
+            .then(response => setRecipe(response.data));
+        })
+        .catch(error => console.error('Error adding comment:', error));
+    } else {
+      alert('Please login to add comments');
+    }
+  };
+
+  const onLikeClick = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user._id;
+      axios.post(`http://localhost:3001/api/recipes/${userId}/like`, {
+        recipeId: id,
+      })
+        .then(response => {
+          setIsLiked(response.data.isLiked);
+          if (response.data.isLiked) {
+            let likes = user.likes || [];
+            likes.push(id);
+            user.likes = likes;
+          } else {
+            let likes = user.likes || [];
+            likes = likes.filter(likeId => likeId !== id);
+            user.likes = likes;
+          }
+          localStorage.setItem('user', JSON.stringify(user));
+        })
+        .catch(error => console.error('Error liking recipe:', error));
+    } else {
+      alert('Please login to like the recipe');
+    }
+  };
+
+  const onFavoriteClick = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const user = JSON.parse(localStorage.getItem('user'));
+      const userId = user._id;
+      axios.post(`http://localhost:3001/api/recipes/${userId}/favorite`, {
+        recipeId: id,
+      })
+        .then(response => {
+          setIsFavorited(response.data.isFavorited);
+          if (response.data.isFavorited) {
+            let favorites = user.favorites || [];
+            favorites.push(id);
+            user.favorites = favorites;
+          } else {
+            let favorites = user.favorites || [];
+            favorites = favorites.filter(favId => favId !== id);
+            user.favorites = favorites;
+          }
+          localStorage.setItem('user', JSON.stringify(user));
+        })
+        .catch(error => console.error('Error favoriting recipe:', error));
+    } else {
+      alert('Please login to favorite the recipe');
+    }
+  };
+
   useEffect(() => {
     if (recipe && recipe.comments) {
       recipe.comments.forEach(comment => {
@@ -129,103 +132,123 @@ function ShowRecipe() {
     }
   }, [recipe, userDetailsMap]);
 
-  // Scroll to comments section
-  function handleReadMoreClick(event) {
-    event.preventDefault();
-    const commentsSection = document.getElementById("comments-section");
-    commentsSection.scrollIntoView({ behavior: "smooth" });
-  }
-
-  // Navigate to user detail page
-  function handleUsernameClick(userId) {
-    axios.get(`http://localhost:3001/api/user/getdetails/${userId}`)
-      .then(response => {
-        navigate(`/user/${userId}`, { state: { user: response.data } });
-      })
-      .catch(error => {
-        console.error('Error fetching user details:', error);
-      });
-  }
 
   return (
-    <div className="recipe-container">
-      <div className="recipe-content">
-        <div className="recipe-details">
-          <div className="recipe-header">
-            {recipe && recipe.name && <h1>{recipe.name}</h1>}
-            {recipe && <RatingShow rating={recipe.averageRating} />}
-          </div>
-          <div className="recipe-comments">
-            {recipe && recipe.comments && recipe.comments.length > 0 && (
-              <p>
-                {recipe.comments && recipe.comments[0] && recipe.comments[0].comment && recipe.comments[0].comment}..........
-                {recipe.comments.length > 0 && <a href="#" className="read-more no-underline-link" onClick={handleReadMoreClick} >Read More</a>}
-              </p>
-            )}
-          </div>
-          <div>
-          </div>
-          <div className="recipe-ingredients-count">
-            {recipe && recipe.ingredients && <p>{recipe.ingredients.length} ingredients</p>}
-          </div>
-          <div className="recipe-actions">
-            <i onClick={handleLike} className="fa-solid fa-thumbs-up someclass" style={{ color: islike ? "yellowgreen" : '', fontSize: 40 }} />
-            <i onClick={handleFavorite} className="fa-solid fa-star someclass" style={{ color: isfavorite ? "orange" : '', fontSize: 40, marginLeft: '10px' }} />
-          </div>
-        </div>
-        <div className="recipe-image">
-          {recipe && recipe.image && (
-            <img src={recipe.image} alt="Sample image" />
-          )}
-        </div>
-      </div>
-      <div className="recipe-extra">
-        <hr className="divider" />
-        <h3>
-          <i className="fa-solid fa-list" /> Ingredients
-        </h3>
-        <ul>
-          {recipe && recipe.ingredients && recipe.ingredients.length > 0 && recipe.ingredients.map((ingredient, index) => (
-            <li key={index}>
-              <i className="fas fa-check" style={{ color: "green" }} />
-              {ingredient}
-            </li>
-          ))}
-        </ul>
-        <hr className="divider" />
-        <h3>
-          <i className="fas fa-lightbulb" /> Follow these instructions...
-        </h3>
-        {recipe && recipe.instructions && <p className="instructions">{recipe.instructions}</p>}
-        <div id="comments-section">
-          <hr className="divider" />
-          <h3>
-            <i className="fa-solid fa-comments" /> Comments
-          </h3>
-          <p>Write your comment</p>
-          <div
-            contentEditable="true"
-            className="editable-comment"
-            onInput={(event) => setComment(event.target.innerText)}
-          />
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <button onClick={handleCommentSubmit} className='btn' style={{ backgroundColor: 'orange' }}>Submit Comment</button>
-            <button onClick={toggleComments} className='btn' style={{ backgroundColor: 'orange' }}>{text}</button>
-          </div>
-          {showcomments && recipe && recipe.comments && recipe.comments.length > 0 && recipe.comments.map((comment, index) => (
-            <div key={index} className="comment">
-              <hr className="divider" />
-              <li>
-                <a href="#" className='no-underline-link'onClick={() => handleUsernameClick(comment.user)}>
-                  {userDetailsMap[comment.user] || comment.user}
-                </a>
-              </li>
-              <li>{comment && comment.comment && comment.comment}</li>
+    <div style={{ width: '100vw' }} className="d-flex justify-content-center align-items-center">
+      <div style={{ borderRadius: 5, marginBottom: 20 }}>
+        <div style={{ width: 1132, height: 400, borderRadius: 5, display: 'flex', padding: 10 }}>
+          <div style={{ flex: 1 }}>
+            <div style={{ margin: 10 }}>
+              {recipe && recipe.name && <h1>{recipe.name}</h1>}
             </div>
-          ))}
-          {hasRated && (
-            <RateRecipe recipeId={id} userId={userId} />
-          )}
+            <div style={{ margin: 10, fontSize: 20 }}>
+              <p>
+                Average Rating:
+                {averageRating > 0 ? (
+                  <RatingShow rating={averageRating} />
+                ) : (
+                  ' No ratings yet'
+                )}
+              </p>
+            </div>
+            <div style={{ margin: 10 }}>
+              {recipe && recipe.comments && recipe.comments.length > 0 && (
+                <p>
+                  {recipe.comments[0].comment}
+                  {recipe.comments.length > 1 && <a href="#" className="ms-2" onClick={handleReadMoreClick}>Read More</a>}
+                </p>
+              )}
+            </div>
+            <div style={{ margin: 10, display: 'inline-block', fontSize: 50 }}>
+              {recipe && recipe.ingredients && <p>{recipe.ingredients.length} ingredients</p>}
+            </div>
+            <div style={{ margin: 10, display: 'flex', alignItems: 'center' }}>
+              <div className="me-3" onClick={onLikeClick}>
+                <i className={`fa-solid fa-thumbs-up`} style={{ color: isLiked ? 'yellowgreen' : 'gray', fontSize: 50 }} />
+              </div>
+              <div onClick={onFavoriteClick}>
+                <i className={`fa-solid fa-star`} style={{ color: isFavorited ? 'orange' : 'gray', fontSize: 50 }} />
+              </div>
+            </div>
+          </div>
+          <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2" style={{ flex: 1 }}>
+            {recipe && recipe.image && <img
+              style={{ objectFit: 'cover', width: '100%', height: '100%', borderRadius: 10 }}
+              src={recipe.image}
+              className="img-fluid"
+              alt="Sample image"
+            />}
+          </div>
+        </div>
+        <div>
+          <hr style={{ height: 1, border: 0, backgroundColor: 'gray', margin: '100px' }} />
+          <div style={{ margin: 10 }}>
+            <h3 style={{ color: 'orange' }}>
+              <i className="fa-solid fa-list" style={{ marginRight: '5px', color: 'orange', fontSize: '25px' }} />
+              Ingredients
+            </h3>
+            <ul style={{ listStyleType: 'none' }}>
+              {recipe && recipe.ingredients && recipe.ingredients.length > 0 && recipe.ingredients.map((ingredient, index) => (
+                <li key={index} style={{ fontFamily: 'Dancing Script', cursive: true, fontOpticalSizing: 'auto', fontWeight: 400, fontStyle: 'normal', fontSize: '25px' }}>
+                  <i className="fas fa-check" style={{ marginRight: '50px', color: 'green' }} />
+                  {ingredient}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div style={{ width: '1132px', margin: '0 auto' }}>
+            <hr style={{ height: 1, border: 0, backgroundColor: 'gray', margin: '100px' }} />
+            <h3 style={{ margin: '20px', color: 'orange' }}>
+              <i className="fas fa-lightbulb" />
+              Follow these instructions...
+            </h3>
+            {recipe && recipe.instructions && <p style={{ margin: '20px', fontFamily: 'Dancing Script', cursive: true, fontOpticalSizing: 'auto', fontWeight: 400, fontStyle: 'normal', fontSize: '25px' }}>
+              {recipe.instructions}
+            </p>}
+          </div>
+          <div id="comments-section">
+            <hr style={{ height: 1, border: 0, backgroundColor: 'gray', margin: '100px' }} />
+            <div style={{ margin: 10 }}>
+              <h3 style={{ color: 'orange' }}>
+                <i className="fas fa-comment-alt" style={{ marginRight: '5px', color: 'orange', fontSize: '25px' }} />
+                Comments
+              </h3>
+              {recipe && recipe.comments && recipe.comments.length > 0 ? (
+                recipe.comments.map((comment, index) => (
+                  <div key={index} style={{ marginBottom: '20px' }}>
+                    <p style={{ fontSize: '18px', marginBottom: '5px' }}>{comment.comment}</p>
+                    <p style={{ fontSize: '14px', color: 'gray', marginBottom: '5px' }}>Posted by:  {userDetailsMap[comment.user] || comment.user}</p>
+                    <hr style={{ height: 1, border: 0, backgroundColor: 'lightgray' }} />
+                  </div>
+                ))
+              ) : (
+                <p>No comments yet.</p>
+              )}
+            </div>
+            <div style={{ margin: 10 }}>
+              <form onSubmit={handleSubmit}>
+                <textarea
+                  className="form-control"
+                  rows="3"
+                  placeholder="Add your comment..."
+                  value={comment}
+                  onChange={handleCommentChange}
+                  required
+                />
+                <button type="submit" className="btn btn-primary mt-3" style={{backgroundColor:'orange'}}>
+                  Add Comment
+                </button>
+              </form>
+            </div>
+          </div>
+          <div style={{ margin: '100px' }}>
+            <hr style={{ height: 1, border: 0, backgroundColor: 'gray', margin: '100px' }} />
+            <h3 style={{ margin: '20px', color: 'orange' }}>
+              <i className="fas fa-star" />
+              Rate this Recipe
+            </h3>
+            <RateRecipe recipeId={id} />
+          </div>
         </div>
       </div>
     </div>
