@@ -37,8 +37,8 @@ async function signUpForm(req, res) {
                 dietraryRestrictions:req.body.preferences.dietaryRestrictions,
             favouriteCuisines:req.body.preferences.favouriteCuisines
         },
-            favorites: null,
-            likes:null,
+            favorites: [],
+            likes:[],
             usertype:req.body.usertype
         });
         res.status(200).json({ message: "User created successfully" });

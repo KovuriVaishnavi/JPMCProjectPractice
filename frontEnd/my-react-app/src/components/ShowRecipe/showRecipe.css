@@ -1,168 +1,141 @@
-/* Container for the entire recipe */
-.recipe-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    width: 100vw;
-  }
-  
-  /* Main content section containing details and image */
-  .recipe-content {
-    display: flex;
-    width: 80%;
-    max-width: 1132px;
-    margin-bottom: 20px;
-  }
-  
-  /* Section for recipe details */
-  .recipe-details {
-    flex: 1.5; /* Adjusted to make room for the image */
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-    padding: 10px;
-  }
-  
-  /* Section for recipe header (name and rating) */
-  .recipe-header {
-    margin: 20px 0;
-    font-size: 28px;
-    font-weight: bold;
-  }
-  
-  /* Section for recipe comments */
-  .recipe-comments {
-    margin: 20px 0;
-    font-size: 20px;
-  }
-  
-  /* Section for ingredient count */
-  .recipe-ingredients-count {
-    margin: 20px 0;
-    font-size: 24px;
-  }
-  
-  /* Section for action icons (like and star) */
-  .recipe-actions {
-    margin: 20px 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Styling for action icons */
-  .recipe-actions .fa-thumbs-up,
-  .recipe-actions .fa-star {
-    font-size: 40px; /* Increased font size */
-    margin-right: 10px;
-  }
-  
-  /* Section for recipe image */
-  .recipe-image {
-    flex: 2; /* Adjusted to increase the width of the image */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-  }
-  
-  /* Styling for recipe image */
-  .recipe-image img {
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
-    max-width: 600px; /* Increased the max-width of the image */
-    border-radius: 10px;
-  }
-  
-  /* Extra content section (ingredients, instructions, comments) */
-  .recipe-extra {
-    width: 80%;
-    max-width: 1132px;
-    margin-top: 20px;
-  }
-  
-  /* Styling for dividers */
-  .divider {
-    height: 1px;
-    border: none;
-    background-color: gray;
-    margin: 40px 0;
-  }
-  
-  /* Styling for headings */
-  .recipe-extra h3 {
-    color: orange;
-    margin: 20px 0;
-    font-size: 28px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Remove default list styling */
-  .recipe-extra ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  /* Styling for list items (ingredients and comments) */
-  .recipe-extra ul li,
-  .comment li {
-    font-family: 'Dancing Script', cursive;
-    font-size: 25px;
-    margin: 10px 0;
-    display: flex;
-    align-items: center;
-  }
-  
-  /* Editable comment section */
-  .editable-comment {
-    border: 1px solid #ccc;
-    min-height: 50px;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    margin: 20px 0;
-  }
-  
-  /* Comment section styling */
-  .comment {
-    margin: 20px 0;
-  }
-  
-  /* Styling for instructions */
-  .instructions {
-    font-family: 'Dancing Script', cursive;
-    font-size: 25px;
-    margin: 20px 0;
-  }
-  
-  /* Responsive design adjustments */
-  @media (max-width: 768px) {
-    .recipe-container {
-      flex-direction: column;
-    }
-  
-    .recipe-content {
-      flex-direction: column;
-    }
-  
-    .recipe-details,
-    .recipe-image,
-    .recipe-extra {
-      width: 100%;
-    }
-  
-    .recipe-image img {
-      max-width: 100%;
-    }
-  }
-  .someclass {
-    transition: transform 0.2s ease;
-    font-size: 40px; /* Adjust the size of the icon */
-    cursor: pointer;
+/* Example styles to move inline styles from the component */
+
+.container {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-.someclass:active {
-    transform: scale(1.25);
+
+.recipe-card {
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 1132px;
+  height: 400px;
+  border-radius: 5px;
+  display: flex;
+  padding: 10px;
+}
+
+.recipe-info {
+  flex: 1;
+  margin: 10px;
+}
+
+.recipe-title {
+  margin: 10px;
+}
+
+.recipe-rating {
+  margin: 10px;
+  font-size: 20px;
+}
+
+.recipe-comment {
+  margin: 10px;
+}
+
+.recipe-ingredients {
+  margin: 10px;
+  display: inline-block;
+  font-size: 50px;
+}
+
+.recipe-actions {
+  margin: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.like-icon {
+  color: gray;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.like-icon.liked {
+  color: yellowgreen;
+}
+
+.favorite-icon {
+  color: gray;
+  font-size: 50px;
+  cursor: pointer;
+}
+
+.favorite-icon.favorited {
+  color: orange;
+}
+
+.recipe-image-container {
+  flex: 1;
+}
+
+.recipe-image {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 10px;
+}
+
+.separator {
+  height: 1px;
+  border: 0;
+  background-color: gray;
+  margin: 100px;
+}
+
+.ingredients-list {
+  list-style-type: none;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+}
+
+.ingredients-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.ingredients-list-item i {
+  margin-right: 50px;
+  color: green;
+}
+
+.instructions {
+  margin: 20px;
+  font-family: 'Dancing Script', cursive;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 25px;
+}
+
+.comments-section {
+  margin: 20px;
+  color: orange;
+}
+
+.comments-section h3 {
+  margin: 20px;
+  color: orange;
+}
+
+.comment-input {
+  border: 1px solid #ccc;
+  width: 90%;
+  min-height: 50px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
+}
+
+.submit-button {
+  background-color: orange;
+  color: white;
+  min-height: 50px;
+  padding: 5px;
+  border-radius: 5px;
+  outline: none;
 }

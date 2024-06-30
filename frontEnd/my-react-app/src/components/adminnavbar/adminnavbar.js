@@ -1,9 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link from react-router-dom
+import { Link, useNavigate } from 'react-router-dom'; // Import Link from react-router-dom
 import { useAuth } from '../../context/authentication';
 import './adminnavbar.css';
 
 export default function AdminNavbar() {
+  const navigate=useNavigate();
   const auth = useAuth();
 
   return (
@@ -24,12 +25,13 @@ export default function AdminNavbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             <li className="nav-item">
-              <a className="nav-link active" aria-current="page" href="#userdashboard">
+              <a className="nav-link active" aria-current="page" onClick={() => navigate('/')}>
+    
                 Home
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="#aboutus">
+              <a className="nav-link" href="#carouselExampleFade">
                 About Us
               </a>
             </li>

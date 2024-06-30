@@ -85,3 +85,7 @@
 .logout-button:hover {
   background-color: #ffc107; /* Change background color on hover */
 }
+
+* {
+  font-family: 'Times New Roman', Times, serif;
+}

@@ -45,13 +45,26 @@ export default function Admindashboard() {
     <>
     <AdminNavbar></AdminNavbar>
       <Carousel />
+      {recommendedRecipes.length>0 &&
       <div className="container mt-4 userdashboard" id="userdashboard">
-        <h2 className="text-center mb-4">FOR YOU</h2>
+      <h2 className="text-center mb-4">BASED ON YOUR PREFERENCES WE RECOMMEND YOU</h2>
+      <div className="d-flex flex-wrap justify-content-around">
+        {recommendedRecipes.map((recipe, index) => (
+          <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
+            <div className="grid-item mb-3" style={{ width: "236px", height: "375px",borderRadius:'0' }}>
+              <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image}/>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </div>}
+      <div className="container mt-4 userdashboard" id="userdashboard">
+        <h2 className="text-center mb-4">ALL RECIPES</h2>
         <div className="d-flex flex-wrap justify-content-around">
           {allRecipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
-              <div className="grid-item mb-3" style={{ width: "236px", height: "375px" ,borderRadius:'0'}}>
-                <RecipeCard image={ recipe.image} recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} />
+              <div className="grid-item mb-3" style={{ width: "236px", height: "375px",borderRadius:'0' }}>
+                <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image}/>
               </div>
             </Link>
           ))}
