@@ -1,8 +1,8 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import RatingShow from '../RatingShow/RatingShow';
 import RateRecipe from '../RateRecipe/RateRecipe';
+import RatingShow from '../RatingShow/RatingShow';
 import './showRecipe.css';
 
 function ShowRecipe() {
@@ -12,6 +12,7 @@ function ShowRecipe() {
   const [isLiked, setIsLiked] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
+  const [userDetailsMap, setUserDetailsMap] = useState({});
 
   useEffect(() => {
     axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
@@ -111,6 +112,27 @@ function ShowRecipe() {
     }
   };
 
+  useEffect(() => {
+    if (recipe && recipe.comments) {
+      recipe.comments.forEach(comment => {
+        if (comment && comment.user && !userDetailsMap[comment.user]) {
+          axios.get(`http://localhost:3001/api/user/getdetails/${comment.user}`)
+            .then(response => {
+              setUserDetailsMap(prevMap => ({
+                ...prevMap,
+                [comment.user]: response.data.username
+              }));
+              
+            })
+            .catch(error => {
+              console.error('Error fetching user details:', error);
+            });
+        }
+      });
+    }
+  }, [recipe, userDetailsMap]);
+
+
   return (
     <div style={{ width: '100vw' }} className="d-flex justify-content-center align-items-center">
       <div style={{ borderRadius: 5, marginBottom: 20 }}>
@@ -195,7 +217,7 @@ function ShowRecipe() {
                 recipe.comments.map((comment, index) => (
                   <div key={index} style={{ marginBottom: '20px' }}>
                     <p style={{ fontSize: '18px', marginBottom: '5px' }}>{comment.comment}</p>
-                    <p style={{ fontSize: '14px', color: 'gray', marginBottom: '5px' }}>Posted by: {comment.user}</p>
+                    <p style={{ fontSize: '14px', color: 'gray', marginBottom: '5px' }}>Posted by:  {userDetailsMap[comment.user] || comment.user}</p>
                     <hr style={{ height: 1, border: 0, backgroundColor: 'lightgray' }} />
                   </div>
                 ))
@@ -213,7 +235,7 @@ function ShowRecipe() {
                   onChange={handleCommentChange}
                   required
                 />
-                <button type="submit" className="btn btn-primary mt-3">
+                <button type="submit" className="btn btn-primary mt-3" style={{backgroundColor:'orange'}}>
                   Add Comment
                 </button>
               </form>
