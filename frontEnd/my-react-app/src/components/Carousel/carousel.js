@@ -27,8 +27,9 @@ export default function Carousel({ onSearch }) {
                 style={{width:'100px'}}
               >
                 <option value="name">Name</option>
-                <option value="ingredient">Ingredients</option>
-                <option value="cuisine">Cuisines</option>
+                <option value="ingredient">ingredient</option>
+                <option value="cuisine">cuisine</option>
+                <option value="difficulty">difficulty</option>
               </select>
               <input
                 className="form-control me-2"

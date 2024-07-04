@@ -28,6 +28,7 @@ routes.get('/api/recipes/search/id/:id',getControllerRecipe.getRecipeById)
 routes.get('/api/recipes/search/name/:name',getControllerRecipe.getRecipeByName)
 routes.get('/api/recipes/search/ingredient/:ingredient',getControllerRecipe.getRecipeByIngredient)
 routes.get('/api/recipes/search/cuisine/:cuisine',getControllerRecipe.getRecipeByCuisine)
+routes.get('/api/recipes/search/difficulty/:difficulty',getControllerRecipe.getRecipeByDifficulty)
 routes.get('/api/recipes/userpreferences/:id',getControllerRecipe.getRecipeByUserPreference)
 
 
