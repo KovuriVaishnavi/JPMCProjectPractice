@@ -8,6 +8,7 @@ export default function Register() {
     username: '',
     email: '',
     password: '',
+    confirmPassword: '',
     preferences: {
       dietaryRestrictions: [],
       favouriteCuisines: [],
@@ -59,14 +60,48 @@ export default function Register() {
     });
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const validatePassword = (password) => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+    return password.length >= minLength && hasUpperCase && hasLowerCase && hasNumber && hasSpecialChar;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { username, email, password, preferences, usertype } = formData;
-    if (!username || !email || !password) {
-      setError('Name, Email, and Password are required fields.');
+    const { username, email, password, confirmPassword, preferences, usertype } = formData;
+
+    if (!username || !email || !password || !confirmPassword) {
+      setError('Name, Email, Password, and Confirm Password are required fields.');
+      alert('Name, Email, Password, and Confirm Password are required fields.');
       return;
     }
-      
+
+    if (!validateEmail(email)) {
+      alert('Please enter a valid email address.');
+      setError('Please enter a valid email address.');
+      return;
+    }
+
+    if (!validatePassword(password)) {
+      setError('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+      alert('Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      alert('Passwords do not match.');
+      setError('Passwords do not match.');
+      return;
+    }
+
     try {
       const response = await fetch('http://localhost:3001/api/auth/signup', {
         method: 'POST',
@@ -84,7 +119,7 @@ export default function Register() {
           usertype: usertype ? 1 : 0,
         }),
       });
-     
+
       const result = await response.json();
       if (response.ok) {
         alert(result.message);
@@ -165,6 +200,24 @@ export default function Register() {
                         </div>
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-lock fa-lg me-3 fa-fw" style={{ color: '#FFA500' }} />
+                        <div className="form-outline flex-fill mb-0">
+                          <label htmlFor="confirmPassword" style={{ color: '#FFA900' }}>
+                            Confirm Password <span style={{ color: 'red' }}>*</span>
+                          </label>
+                          <input
+                            type="password"
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            className="form-control"
+                            placeholder="Confirm Password"
+                            value={formData.confirmPassword}
+                            onChange={handleChange}
+                            required
+                          />
+                        </div>
+                      </div>
+                      <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-utensils fa-lg me-3 fa-fw" style={{ color: '#FFA500' }} />
                         <div className="form-outline flex-fill mb-0">
                           <label htmlFor="dietaryRestrictions" style={{ color: '#FFA900' }}>
@@ -187,7 +240,7 @@ export default function Register() {
                       </div>
                       <div className="d-flex flex-row align-items-center mb-4">
                         <i className="fas fa-globe fa-lg me-3 fa-fw" style={{ color: '#FFA500' }} />
-                        <div className="form-outline flex-fill mb-0">
+                        <div className="form-outlines flex-fill mb-0">
                           <label htmlFor="favouriteCuisines" style={{ color: '#FFA900' }}>
                             Favourite Cuisines
                           </label>
