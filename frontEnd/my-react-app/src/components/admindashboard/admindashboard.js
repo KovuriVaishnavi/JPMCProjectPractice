@@ -25,6 +25,7 @@ export default function Admindashboard() {
         );
         const recipeResponses = await Promise.all(recipePromises);
         const fetchedRecipes = recipeResponses.flatMap(response => response.data);
+        console.log('hi');
         console.log(fetchedRecipes);
         setRecommendedRecipes(fetchedRecipes);
       } catch (error) {

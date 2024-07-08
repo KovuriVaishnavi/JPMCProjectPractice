@@ -1,5 +1,5 @@
 import React from 'react';
-import RatingShow from '../RatingShow/RatingShow'; // Adjust the import path based on your project structure
+import RatingShow from '../RatingShow/RatingShow'; 
 
 const RecipeCard = (props) => {
     return (

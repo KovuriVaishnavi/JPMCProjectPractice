@@ -18,7 +18,7 @@ const ProfilePage = () => {
 
   // Retrieve username from localStorage
   const username = JSON.parse(localStorage.getItem('user')).username;
-
+ const useremail=JSON.parse(localStorage.getItem('user')).email;
   return (
     <div className="home-container">
       <div className="content">
@@ -29,7 +29,12 @@ const ProfilePage = () => {
           </div>
         </div>
         <div className="text-container mt-1">
-          <h1>{username}</h1>
+        <div >
+          <h1><span style={{color:'orange'}}>UserName</span> : {username}</h1>
+        </div>
+        <div >
+          <h1><span style={{color:'orange'}}>Email</span> : {useremail}</h1>
+        </div>
         </div>
         <button className='circular-button mb-3 mt-1' onClick={auth.logOut}>Log Out</button>
         <ProfileNavBar onPreferencesClick={handlePreferencesClick} />

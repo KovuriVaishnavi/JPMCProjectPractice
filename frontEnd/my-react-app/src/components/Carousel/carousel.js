@@ -29,6 +29,7 @@ export default function Carousel({ onSearch }) {
                 <option value="name">Name</option>
                 <option value="ingredient">Ingredients</option>
                 <option value="cuisine">Cuisines</option>
+                <option value="difficulty">Difficulty</option>
               </select>
               <input
                 className="form-control me-2"

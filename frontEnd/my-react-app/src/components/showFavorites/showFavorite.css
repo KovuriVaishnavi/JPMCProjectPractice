@@ -15,6 +15,10 @@
     margin-bottom: 20px;
   }
   
+ .grid{
+  max-height: 100vh;
+ }
+
   .recipe-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
@@ -31,4 +35,34 @@
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
     }
   }
+  
+
+/*   
+  .favorites-container {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+  }
+  
+  .favorites-heading {
+    margin-bottom: 20px;
+  }
+  
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(236px, 1fr));
+    gap: 20px;
+    justify-items: center;
+  }
+  
+  .nav-link {
+    text-decoration: none;
+  }
+  
+  @media (max-width: 768px) {
+    .recipe-grid {
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+  } */
   

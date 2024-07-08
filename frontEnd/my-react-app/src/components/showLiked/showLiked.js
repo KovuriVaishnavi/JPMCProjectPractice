@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import RecipeCard from "../RecipeCard/RecipeCard";
-
+import '../showFavorites/showFavorite.css'
 export default function ShowLiked() {
   const [recipes, setRecipes] = useState([]);
   const [LikedRecipeIds, setLikedRecipeIds] = useState([]);
@@ -33,25 +33,17 @@ export default function ShowLiked() {
   }, [LikedRecipeIds]);
 
   return (
-    <div className="container mt-4 userdashboard" id="userdashboard">
-     
-      <div className="favorites-container">
-        <div className="favorites-heading">
-          <h2 className="text-center mb-4">YOU LIKED</h2>
-        </div>
-        <div className="recipe-grid">
-          {recipes.map((recipe, index) => (
-            <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
-              <RecipeCard
-                recipename={recipe.name}
-                description={`Let's make amazing ${recipe.name}`}
-                averageRating={recipe.averageRating}
-                image={recipe.image}
-              />
-            </Link>
-          ))}
-        </div>
-      </div>
+    <div className="favorites-container mt-4">
+    <h2 className="favorites-heading">YOU LIKED</h2>
+    <div className="recipe-grid">
+      {recipes.map((recipe, index) => (
+        <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
+          <div className="grid">
+            <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image} />
+          </div>
+        </Link>
+      ))}
     </div>
+  </div>
   );
 }

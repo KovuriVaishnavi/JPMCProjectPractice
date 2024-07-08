@@ -117,11 +117,11 @@ function ShowRecipe() {
         <div style={{ width: 1132, height: 400, borderRadius: 5, display: 'flex', padding: 10 }}>
           <div style={{ flex: 1 }}>
             <div style={{ margin: 10 }}>
-              {recipe && recipe.name && <h1>{recipe.name}</h1>}
+              {recipe && recipe.name && <h1><span style={{color:'darkcyan'}}>{recipe.name}</span></h1>}
             </div>
             <div style={{ margin: 10, fontSize: 20 }}>
               <p>
-                Average Rating:
+              <span style={{color:'orange'}}>Average Rating </span>:
                 {averageRating > 0 ? (
                   <RatingShow rating={averageRating} />
                 ) : (
@@ -129,17 +129,14 @@ function ShowRecipe() {
                 )}
               </p>
             </div>
-            <div style={{ margin: 10 }}>
-              {recipe && recipe.comments && recipe.comments.length > 0 && (
-                <p>
-                  {recipe.comments[0].comment}
-                  {recipe.comments.length > 1 && <a href="#" className="ms-2" onClick={handleReadMoreClick}>Read More</a>}
-                </p>
+            <div style={{ margin: 10, fontSize: 20 }}>
+            {recipe && (
+                <div>
+                  <p><span style={{color:'orange'}}>Difficulty Level </span>: {recipe.difficulty}</p>
+                  <p><span style={{color:'orange'}}>Cuisine Type </span>: {recipe.cuisine}</p>
+                </div>
               )}
-            </div>
-            <div style={{ margin: 10, display: 'inline-block', fontSize: 50 }}>
-              {recipe && recipe.ingredients && <p>{recipe.ingredients.length} ingredients</p>}
-            </div>
+              </div>
             <div style={{ margin: 10, display: 'flex', alignItems: 'center' }}>
               <div className="me-3" onClick={onLikeClick}>
                 <i className={`fa-solid fa-thumbs-up`} style={{ color: isLiked ? 'yellowgreen' : 'gray', fontSize: 50 }} />
