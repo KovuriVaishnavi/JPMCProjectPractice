@@ -13,26 +13,34 @@ export default function Userdashboard() {
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem('user'));
     if (user && user.preferences.favouriteCuisines) {
-      fetchRecommendedRecipes(user.preferences.favouriteCuisines);
+      console.log(user.preferences.dietraryRestrictions)
+      fetchRecommendedRecipes(user.preferences.favouriteCuisines, user.preferences.dietraryRestrictions);
     }
   }, []);
 
-  const fetchRecommendedRecipes = (cuisines) => {
-    const fetchRecipes = async () => {
-      try {
-        const recipePromises = cuisines.map(cuisine=>
-          axios.get(`http://localhost:3001/api/recipes/search/cuisine/${cuisine}`)
-        );
-        const recipeResponses = await Promise.all(recipePromises);
-        const fetchedRecipes = recipeResponses.flatMap(response => response.data);
-        console.log('hi');
-        console.log(fetchedRecipes);
-        setRecommendedRecipes(fetchedRecipes);
-      } catch (error) {
-        console.error('Error fetching recipes:', error);
-      }
-    };
-    fetchRecipes();
+  const fetchRecommendedRecipes = async (cuisines, dietaryRestrictions) => {
+    try {
+      const recipePromises = cuisines.map(cuisine =>
+        axios.get(`http://localhost:3001/api/recipes/search/cuisine/${cuisine}`)
+      );
+      const recipeResponses = await Promise.all(recipePromises);
+      let fetchedRecipes = recipeResponses.flatMap(response => response.data);
+
+      
+      fetchedRecipes = fetchedRecipes.filter(recipe => {
+        for (const restriction of dietaryRestrictions) {
+          if (recipe.type===restriction) {
+            return false; 
+          }
+        }
+        return true; 
+      });
+
+      console.log(fetchedRecipes)
+      setRecommendedRecipes(fetchedRecipes);
+    } catch (error) {
+      console.error('Error fetching or filtering recipes:', error);
+    }
   };
 
   useEffect(() => {
@@ -48,7 +56,7 @@ export default function Userdashboard() {
       <Carousel />
       {recommendedRecipes.length>0 &&
       <div className="container mt-4 userdashboard" id="userdashboard">
-      <h2 className="text-center mb-4">BASED ON YOUR PREFERENCES WE RECOMMEND YOU</h2>
+      <h2 className="text-center mb-4" style={{color:'darkcyan'}}>BASED ON YOUR PREFERENCES WE RECOMMEND YOU</h2>
       <div className="d-flex flex-wrap justify-content-around">
         {recommendedRecipes.map((recipe, index) => (
           <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
@@ -60,7 +68,7 @@ export default function Userdashboard() {
       </div>
     </div>}
       <div className="container mt-4 userdashboard" id="userdashboard">
-        <h2 className="text-center mb-4">ALL RECIPES</h2>
+        <h2 className="text-center mb-4" style={{color:'darkcyan'}}>ALL RECIPES</h2>
         <div className="d-flex flex-wrap justify-content-around">
           {allRecipes.map((recipe, index) => (
             <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>

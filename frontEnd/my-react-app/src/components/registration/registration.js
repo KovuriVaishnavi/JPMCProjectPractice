@@ -1,9 +1,9 @@
-// import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './registration.css';
 import { useState } from 'react';
 export default function Register() {
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -131,6 +131,10 @@ export default function Register() {
       console.error('Error:', error);
     }
   };
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword);
+}
+
 
   return (
     <section className="vh-100" style={{ backgroundColor: "#eee" }}>
@@ -196,6 +200,11 @@ export default function Register() {
                             value={formData.password}
                             onChange={handleChange}
                             required
+                          />
+                          <i
+                            className={`fas ${showPassword ? 'fa-eye-slash' : 'fa-eye'} position-absolute end-0 top-50 translate-middle-y me-3`}
+                            style={{ cursor: 'pointer', color: "#FFA500" }}
+                            onClick={togglePasswordVisibility}
                           />
                         </div>
                       </div>

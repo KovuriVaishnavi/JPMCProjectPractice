@@ -100,6 +100,28 @@ async function getRecipeByCuisine(req,res){
         res.status(404).json({message:"Internal server error"})
     }
 }
+
+
+async function getRecipeByType(req,res){
+    const {type}=req.params;
+    try{
+        // const recipes=await recipeModel.find(ingredients,{'$regex':ingredient,'$options':'i'})
+        const recipes = await recipeModel.find(
+            { Type: { $regex: type, $options: 'i' } }
+        );
+        if(!recipes){
+            res.status(404).send("recipes with this cuisine does not exist"); 
+        }
+        else{
+            console.log(recipes)
+            res.status(200).json(recipes);
+        }
+    }
+    catch(error){
+        console.log("error in searching recipe")
+        res.status(404).json({message:"Internal server error"})
+    }
+}
 async function getRecipeByDifficulty(req,res){
     const {difficulty}=req.params;
     try{
@@ -174,7 +196,7 @@ async function getRecipeByUserPreference(req, res) {
 
 
 
-module.exports={addRecipe,getRecipeById,getRecipeByIngredient,getRecipeByCuisine,getRecipeByName,getRecipeByUserPreference,getRecipes,getRecipeByDifficulty}
+module.exports={addRecipe,getRecipeById,getRecipeByIngredient,getRecipeByCuisine,getRecipeByName,getRecipeByUserPreference,getRecipes,getRecipeByDifficulty,getRecipeByType}
 
 
 

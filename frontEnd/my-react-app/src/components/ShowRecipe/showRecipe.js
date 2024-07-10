@@ -12,7 +12,8 @@ function ShowRecipe() {
   const [isLiked, setIsLiked] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
   const [averageRating, setAverageRating] = useState(0);
-
+  const [userDetailsMap, setUserDetailsMap] = useState({});
+  
   useEffect(() => {
     axios.get(`http://localhost:3001/api/recipes/search/id/${id}`)
       .then(response => {
@@ -26,18 +27,32 @@ function ShowRecipe() {
       })
       .catch(error => console.error('Error fetching recipe:', error));
 
-}, [id]);
+}, [id,isLiked]);
+useEffect(() => {
+  if (recipe && recipe.comments) {
+    recipe.comments.forEach(comment => {
+      if (comment && comment.user && !userDetailsMap[comment.user]) {
+        axios.get(`http://localhost:3001/api/user/getdetails/${comment.user}`)
+          .then(response => {
+            setUserDetailsMap(prevMap => ({
+              ...prevMap,
+              [comment.user]: response.data.username
+            }));
+            
+          })
+          .catch(error => {
+            console.error('Error fetching user details:', error);
+          });
+      }
+    });
+  }
+}, [recipe, userDetailsMap]);
 
-  const handleReadMoreClick = (event) => {
-    event.preventDefault();
-    const commentsSection = document.getElementById('comments-section');
-    commentsSection.scrollIntoView({ behavior: 'smooth' });
-  };
 
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
-
+ 
   const handleSubmit = (event) => {
     event.preventDefault();
     const token = localStorage.getItem('token');
@@ -56,7 +71,7 @@ function ShowRecipe() {
       alert('Please login to add comments');
     }
   };
-
+  
   const onLikeClick = () => {
     const token = localStorage.getItem('token');
     if (token) {
@@ -138,10 +153,11 @@ function ShowRecipe() {
               )}
               </div>
             <div style={{ margin: 10, display: 'flex', alignItems: 'center' }}>
-              <div className="me-3" onClick={onLikeClick}>
+              <div className="me-3 mt-4" onClick={onLikeClick}>
                 <i className={`fa-solid fa-thumbs-up`} style={{ color: isLiked ? 'yellowgreen' : 'gray', fontSize: 50 }} />
+                <p>{recipe && recipe.likes} likes</p>
               </div>
-              <div onClick={onFavoriteClick}>
+              <div className="mb-2" onClick={onFavoriteClick}>
                 <i className={`fa-solid fa-star`} style={{ color: isFavorited ? 'orange' : 'gray', fontSize: 50 }} />
               </div>
             </div>
@@ -192,7 +208,7 @@ function ShowRecipe() {
                 recipe.comments.map((comment, index) => (
                   <div key={index} style={{ marginBottom: '20px' }}>
                     <p style={{ fontSize: '18px', marginBottom: '5px' }}>{comment.comment}</p>
-                    <p style={{ fontSize: '14px', color: 'gray', marginBottom: '5px' }}>Posted by: {comment.user}</p>
+                    <p style={{ fontSize: '14px', color: 'gray', marginBottom: '5px' }}>Posted by:  {userDetailsMap[comment.user] || <>user not found</>}</p>
                     <hr style={{ height: 1, border: 0, backgroundColor: 'lightgray' }} />
                   </div>
                 ))

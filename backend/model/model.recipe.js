@@ -32,7 +32,8 @@ const recipeSchema = new mongoose.Schema({
             type:Number
         }
     ],
-                //calculated based on user rating
+    type:String
+    ,
     comments:[{
         user:{
             type:mongoose.Schema.ObjectId,

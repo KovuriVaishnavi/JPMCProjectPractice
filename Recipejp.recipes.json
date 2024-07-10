@@ -1,246 +1,255 @@
-[{
-  "_id": {
-    "$oid": "66520823eb7de6fe8643b8d5"
-  },
-  "name": "Chicken Basmati Biryani",
-  "ingredients": [
-    "1 kg chicken, cut into pieces",
-    "2 cups basmati rice",
-    "2 large onions, thinly sliced",
-    "3 tomatoes, chopped",
-    "1 cup yogurt",
-    "2 tbsp ginger-garlic paste",
-    "2 green chilies, slit",
-    "1/2 cup chopped mint leaves",
-    "1/2 cup chopped coriander leaves",
-    "2 tbsp biryani masala",
-    "1 tsp red chili powder",
-    "1/2 tsp turmeric powder",
-    "4 tbsp oil",
-    "1 tbsp ghee",
-    "2 bay leaves",
-    "4 cloves",
-    "4 cardamom pods",
-    "1 cinnamon stick",
-    "1 star anise",
-    "Salt to taste",
-    "Water as needed"
-  ],
-  "instructions": "1. Wash and soak the basmati rice for 30 minutes. \n2. Heat oil and ghee in a large pot. Add bay leaves, cloves, cardamom pods, cinnamon stick, and star anise. Sauté for a minute. \n3. Add sliced onions and fry until golden brown. \n4. Add ginger-garlic paste and green chilies, sauté until raw smell disappears. \n5. Add chopped tomatoes and cook until they turn soft. \n6. Add chicken pieces, biryani masala, red chili powder, turmeric powder, and salt. Cook until chicken is half done. \n7. Add yogurt, mint leaves, and coriander leaves. Cook for another 5 minutes. \n8. In a separate pot, bring water to a boil and cook the soaked rice until it is 70% done. Drain the rice. \n9. Layer the half-cooked chicken with the rice. Sprinkle some more mint and coriander leaves on top. \n10. Cover the pot with a tight-fitting lid and cook on low heat for 20-25 minutes until the rice and chicken are fully cooked. \n11. Serve hot with raita or salad.",
-  "cuisine": "Indian",
-  "difficulty": "Medium",
-  "image": "https://www.sugarspicenmore.com/wp-content/uploads/2021/02/Biryani-4-1.jpg",
-  "likes": 1,
-  "averageRating": 5,
-  "Rating": [
-    5
-  ],
-  "comments": [
-    {
-      "user": {
-        "$oid": "6680da06a64889129e60af4f"
-      },
-      "comment": "its amazing!",
-      "_id": {
-        "$oid": "6680da32a64889129e60af61"
-      },
-      "timeStamp": {
-        "$date": "2024-06-30T04:08:18.677Z"
+[
+  {
+    "_id": {
+      "$oid": "66520823eb7de6fe8643b8d5"
+    },
+    "name": "Chicken Basmati Biryani",
+    "ingredients": [
+      "1 kg chicken, cut into pieces",
+      "2 cups basmati rice",
+      "2 large onions, thinly sliced",
+      "3 tomatoes, chopped",
+      "1 cup yogurt",
+      "2 tbsp ginger-garlic paste",
+      "2 green chilies, slit",
+      "1/2 cup chopped mint leaves",
+      "1/2 cup chopped coriander leaves",
+      "2 tbsp biryani masala",
+      "1 tsp red chili powder",
+      "1/2 tsp turmeric powder",
+      "4 tbsp oil",
+      "1 tbsp ghee",
+      "2 bay leaves",
+      "4 cloves",
+      "4 cardamom pods",
+      "1 cinnamon stick",
+      "1 star anise",
+      "Salt to taste",
+      "Water as needed"
+    ],
+    "instructions": "1. Wash and soak the basmati rice for 30 minutes. \n2. Heat oil and ghee in a large pot. Add bay leaves, cloves, cardamom pods, cinnamon stick, and star anise. Sauté for a minute. \n3. Add sliced onions and fry until golden brown. \n4. Add ginger-garlic paste and green chilies, sauté until raw smell disappears. \n5. Add chopped tomatoes and cook until they turn soft. \n6. Add chicken pieces, biryani masala, red chili powder, turmeric powder, and salt. Cook until chicken is half done. \n7. Add yogurt, mint leaves, and coriander leaves. Cook for another 5 minutes. \n8. In a separate pot, bring water to a boil and cook the soaked rice until it is 70% done. Drain the rice. \n9. Layer the half-cooked chicken with the rice. Sprinkle some more mint and coriander leaves on top. \n10. Cover the pot with a tight-fitting lid and cook on low heat for 20-25 minutes until the rice and chicken are fully cooked. \n11. Serve hot with raita or salad.",
+    "cuisine": "Indian",
+    "difficulty": "Medium",
+    "image": "https://www.sugarspicenmore.com/wp-content/uploads/2021/02/Biryani-4-1.jpg",
+    "likes": 1,
+    "averageRating": 5,
+    "Rating": [5],
+    "comments": [
+      {
+        "user": {
+          "$oid": "6680da06a64889129e60af4f"
+        },
+        "comment": "its amazing!",
+        "_id": {
+          "$oid": "6680da32a64889129e60af61"
+        },
+        "timeStamp": {
+          "$date": "2024-06-30T04:08:18.677Z"
+        }
       }
-    }
-  ],
-  "__v": 1
-},
-{
-  "_id": {
-    "$oid": "667fc312a64889129e6092e0"
+    ],
+    "__v": 1,
+    "type": "Non-Vegetarian"
   },
-  "name": "Tea",
-  "ingredients": [
-    "Water",
-    "Tea leaves (or tea bags)",
-    "Milk (optional)",
-    "Sugar (optional)"
-  ],
-  "instructions": "To make a delightful cup of tea, start by boiling water in a kettle or pot. Once the water reaches a rolling boil, add tea leaves or tea bags into the boiling water. Allow it to steep for about 2-3 minutes to achieve a strong brew, adjusting the time based on your taste preference. If you enjoy milk tea, add milk to the boiling mixture and stir gently. You can also add sugar at this point to sweeten it to your liking. Let the tea simmer for an additional minute while stirring occasionally. Finally, remove the pot from the heat, strain the tea into cups, and savor the comforting warmth and flavor of freshly brewed tea. Adjust the proportions of tea leaves, milk, and sugar according to your personal taste preferences for a perfect cup every time. Enjoy your tea!",
-  "cuisine": "Indian",
-  "difficulty": "easy",
-  "image": "https://images8.alphacoders.com/385/385149.jpg",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 1
-},
-{
-  "_id": {
-    "$oid": "667fc51ca64889129e6092fb"
+  {
+    "_id": {
+      "$oid": "667fc312a64889129e6092e0"
+    },
+    "name": "Tea",
+    "ingredients": [
+      "Water",
+      "Tea leaves (or tea bags)",
+      "Milk (optional)",
+      "Sugar (optional)"
+    ],
+    "instructions": "To make a delightful cup of tea, start by boiling water in a kettle or pot. Once the water reaches a rolling boil, add tea leaves or tea bags into the boiling water. Allow it to steep for about 2-3 minutes to achieve a strong brew, adjusting the time based on your taste preference. If you enjoy milk tea, add milk to the boiling mixture and stir gently. You can also add sugar at this point to sweeten it to your liking. Let the tea simmer for an additional minute while stirring occasionally. Finally, remove the pot from the heat, strain the tea into cups, and savor the comforting warmth and flavor of freshly brewed tea. Adjust the proportions of tea leaves, milk, and sugar according to your personal taste preferences for a perfect cup every time. Enjoy your tea!",
+    "cuisine": "Indian",
+    "difficulty": "easy",
+    "image": "https://images8.alphacoders.com/385/385149.jpg",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 1,
+    "type": "Gluten-Free"
   },
-  "name": "Vegetable Spring Rolls",
-  "ingredients": [
-    "\"Rice Paper Wrappers",
-    "Shredded Cabbage",
-    "Carrots",
-    "Cucumber",
-    "Bell Pepper",
-    "Mint Leaves",
-    "Rice Vermicelli Noodles",
-    "Peanut Sauce (for dipping)\""
-  ],
-  "instructions": "\"1. Soften rice paper wrappers by dipping them in warm water for a few seconds. 2. Lay softened wrapper flat on a clean surface. 3. Place a small amount of shredded cabbage, julienne carrots, cucumber slices, bell pepper strips, mint leaves, and cooked rice vermicelli noodles on the lower third of the wrapper. 4. Fold the bottom of the wrapper over the filling, then fold in the sides and roll tightly. 5. Repeat with remaining ingredients. 6. Serve vegetable spring rolls with peanut sauce for dipping.\"",
-  "cuisine": "asian",
-  "difficulty": "medium",
-  "image": "https://tse2.mm.bing.net/th?id=OIP.Szp2KEB2TWGX7SVrYoA9WwHaHa&pid=Api&P=0&h=180",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "667fc693a64889129e609307"
+  {
+    "_id": {
+      "$oid": "667fc51ca64889129e6092fb"
+    },
+    "name": "Vegetable Spring Rolls",
+    "ingredients": [
+      "\"Rice Paper Wrappers",
+      "Shredded Cabbage",
+      "Carrots",
+      "Cucumber",
+      "Bell Pepper",
+      "Mint Leaves",
+      "Rice Vermicelli Noodles",
+      "Peanut Sauce (for dipping)\""
+    ],
+    "instructions": "\"1. Soften rice paper wrappers by dipping them in warm water for a few seconds. 2. Lay softened wrapper flat on a clean surface. 3. Place a small amount of shredded cabbage, julienne carrots, cucumber slices, bell pepper strips, mint leaves, and cooked rice vermicelli noodles on the lower third of the wrapper. 4. Fold the bottom of the wrapper over the filling, then fold in the sides and roll tightly. 5. Repeat with remaining ingredients. 6. Serve vegetable spring rolls with peanut sauce for dipping.\"",
+    "cuisine": "Asian",
+    "difficulty": "medium",
+    "image": "https://tse2.mm.bing.net/th?id=OIP.Szp2KEB2TWGX7SVrYoA9WwHaHa&pid=Api&P=0&h=180",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 0,
+    "type": "Vegan"
   },
-  "name": "Sushi Rolls",
-  "ingredients": [
-    "Sushi Rice",
-    "Nori Seaweed",
-    "Assorted Fish (e.g., Tuna, Salmon, Yellowtail)",
-    "Cucumber",
-    "Avocado",
-    "Carrot",
-    "Sesame Seeds",
-    "Soy Sauce",
-    "Wasabi",
-    "Pickled Ginger"
-  ],
-  "instructions": "1. Prepare sushi rice according to package instructions and let it cool. 2. Place a sheet of nori on a bamboo sushi mat. 3. Spread a thin layer of rice over the nori, leaving a border at the top. 4. Arrange strips of fish, cucumber, avocado, and carrot in the center of the rice. 5. Roll the sushi tightly using the bamboo mat. 6. Slice into bite-sized pieces using a sharp knife. 7. Serve with soy sauce, wasabi, and pickled ginger.",
-  "cuisine": "Asian",
-  "difficulty": "Medium",
-  "image": "https://padcook.com/wp-content/uploads/2020/04/4876.jpg",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 1
-},
-{
-  "_id": {
-    "$oid": "667fc7d6a64889129e609311"
+  {
+    "_id": {
+      "$oid": "667fc693a64889129e609307"
+    },
+    "name": "Sushi Rolls",
+    "ingredients": [
+      "Sushi Rice",
+      "Nori Seaweed",
+      "Assorted Fish (e.g., Tuna, Salmon, Yellowtail)",
+      "Cucumber",
+      "Avocado",
+      "Carrot",
+      "Sesame Seeds",
+      "Soy Sauce",
+      "Wasabi",
+      "Pickled Ginger"
+    ],
+    "instructions": "1. Prepare sushi rice according to package instructions and let it cool. 2. Place a sheet of nori on a bamboo sushi mat. 3. Spread a thin layer of rice over the nori, leaving a border at the top. 4. Arrange strips of fish, cucumber, avocado, and carrot in the center of the rice. 5. Roll the sushi tightly using the bamboo mat. 6. Slice into bite-sized pieces using a sharp knife. 7. Serve with soy sauce, wasabi, and pickled ginger.",
+    "cuisine": "Asian",
+    "difficulty": "Medium",
+    "image": "https://padcook.com/wp-content/uploads/2020/04/4876.jpg",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 1,
+    "type": "Non-Vegetarian"
   },
-  "name": "Chicken Curry",
-  "ingredients": [
-    "Chicken Thighs",
-    "Coconut Milk",
-    "Curry Paste",
-    "Onion",
-    "Garlic",
-    "Ginger",
-    "Potatoes",
-    "Carrots",
-    "Bell Pepper",
-    "Fish Sauce",
-    "Sugar",
-    "Lime",
-    "Thai Basil"
-  ],
-  "instructions": "1. In a pot, heat oil and sauté chopped onion, minced garlic, and grated ginger until fragrant. 2. Add chicken thighs and cook until browned. 3. Stir in curry paste and cook for a few minutes. 4. Pour in coconut milk and bring to a simmer. 5. Add diced potatoes, carrots, and bell pepper to the pot. 6. Simmer until chicken is cooked through and vegetables are tender. 7. Season with fish sauce, sugar, and lime juice. 8. Serve hot, garnished with chopped Thai basil.",
-  "cuisine": "Asian",
-  "difficulty": "Medium",
-  "image": "https://tse2.mm.bing.net/th?id=OIP.UfhPMpFSbzeMKClppjcl0AHaE8&pid=Api&P=0&h=180",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "667fc84ea64889129e609315"
+  {
+    "_id": {
+      "$oid": "667fc7d6a64889129e609311"
+    },
+    "name": "Chicken Curry",
+    "ingredients": [
+      "Chicken Thighs",
+      "Coconut Milk",
+      "Curry Paste",
+      "Onion",
+      "Garlic",
+      "Ginger",
+      "Potatoes",
+      "Carrots",
+      "Bell Pepper",
+      "Fish Sauce",
+      "Sugar",
+      "Lime",
+      "Thai Basil"
+    ],
+    "instructions": "1. In a pot, heat oil and sauté chopped onion, minced garlic, and grated ginger until fragrant. 2. Add chicken thighs and cook until browned. 3. Stir in curry paste and cook for a few minutes. 4. Pour in coconut milk and bring to a simmer. 5. Add diced potatoes, carrots, and bell pepper to the pot. 6. Simmer until chicken is cooked through and vegetables are tender. 7. Season with fish sauce, sugar, and lime juice. 8. Serve hot, garnished with chopped Thai basil.",
+    "cuisine": "Asian",
+    "difficulty": "Medium",
+    "image": "https://tse2.mm.bing.net/th?id=OIP.UfhPMpFSbzeMKClppjcl0AHaE8&pid=Api&P=0&h=180",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 0,
+    "type": "Non-Vegetarian"
   },
-  "name": "Tom Yam",
-  "ingredients": [
-    "Shrimp",
-    "Lemongrass",
-    "Galangal",
-    "Kaffir lime leaves",
-    "Bird's eye chili",
-    "Mushrooms",
-    "Tomatoes",
-    "Fish sauce",
-    "Lime juice",
-    "Sugar",
-    "Cilantro",
-    "Thai chili paste (nam prik pao)"
-  ],
-  "instructions": "1. Bring water to a boil in a pot. 2. Add lemongrass, galangal, and kaffir lime leaves to infuse flavor. 3. Add shrimp, mushrooms, tomatoes, and bird's eye chili. 4. Season with fish sauce, lime juice, and sugar to taste. 5. Simmer until shrimp is cooked through. 6. Serve hot, garnished with cilantro and a spoonful of Thai chili paste.",
-  "cuisine": "Asian",
-  "difficulty": "Medium",
-  "image": "https://1.bp.blogspot.com/-kn3SO4FzbKA/XO5TgM_rxQI/AAAAAAAAEmo/pARbBPyZ9NM8hoHOVAmYz6-drjC1a09KwCEwYBhgL/s1600/tom-yum-12-1-sur-1.jpg",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 0
-},
-{
-  "_id": {
-    "$oid": "667fc8aea64889129e609319"
+  {
+    "_id": {
+      "$oid": "667fc84ea64889129e609315"
+    },
+    "name": "Tom Yam",
+    "ingredients": [
+      "Shrimp",
+      "Lemongrass",
+      "Galangal",
+      "Kaffir lime leaves",
+      "Bird's eye chili",
+      "Mushrooms",
+      "Tomatoes",
+      "Fish sauce",
+      "Lime juice",
+      "Sugar",
+      "Cilantro",
+      "Thai chili paste (nam prik pao)"
+    ],
+    "instructions": "1. Bring water to a boil in a pot. 2. Add lemongrass, galangal, and kaffir lime leaves to infuse flavor. 3. Add shrimp, mushrooms, tomatoes, and bird's eye chili. 4. Season with fish sauce, lime juice, and sugar to taste. 5. Simmer until shrimp is cooked through. 6. Serve hot, garnished with cilantro and a spoonful of Thai chili paste.",
+    "cuisine": "Asian",
+    "difficulty": "Medium",
+    "image": "https://1.bp.blogspot.com/-kn3SO4FzbKA/XO5TgM_rxQI/AAAAAAAAEmo/pARbBPyZ9NM8hoHOVAmYz6-drjC1a09KwCEwYBhgL/s1600/tom-yum-12-1-sur-1.jpg",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 0,
+    "type": "Non-Vegetarian"
   },
-  "name": "Dim Sum",
-  "ingredients": [
-    "Dough (for dumpling wrappers)",
-    "Pork",
-    "Shrimp",
-    "Chives",
-    "Soy sauce",
-    "Sesame oil",
-    "Ginger",
-    "Garlic",
-    "Cornstarch",
-    "Rice vinegar",
-    "Sugar",
-    "Soy sauce",
-    "Sriracha sauce"
-  ],
-  "instructions": "1. Prepare the filling by mixing chopped pork, chopped shrimp, chopped chives, soy sauce, sesame oil, minced ginger, minced garlic, cornstarch, rice vinegar, sugar, and a dash of soy sauce and sriracha sauce. 2. Roll out the dough and cut into circles for dumpling wrappers. 3. Place a spoonful of filling in the center of each wrapper. 4. Fold the wrapper in half and seal the edges by crimping or pleating. 5. Steam the dumplings in a bamboo steamer for about 10-12 minutes until cooked through. 6. Serve hot with soy sauce for dipping.",
-  "cuisine": "Asian",
-  "difficulty": "Medium",
-  "image": "https://tse4.mm.bing.net/th?id=OIP.DdhmEKlsIftA5Yfr8NtikQHaE8&pid=Api&P=0&h=180",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 3
-},
-{
-  "_id": {
-    "$oid": "667fc8e9a64889129e60931d"
+  {
+    "_id": {
+      "$oid": "667fc8aea64889129e609319"
+    },
+    "name": "Dim Sum",
+    "ingredients": [
+      "Dough (for dumpling wrappers)",
+      "Pork",
+      "Shrimp",
+      "Chives",
+      "Soy sauce",
+      "Sesame oil",
+      "Ginger",
+      "Garlic",
+      "Cornstarch",
+      "Rice vinegar",
+      "Sugar",
+      "Soy sauce",
+      "Sriracha sauce"
+    ],
+    "instructions": "1. Prepare the filling by mixing chopped pork, chopped shrimp, chopped chives, soy sauce, sesame oil, minced ginger, minced garlic, cornstarch, rice vinegar, sugar, and a dash of soy sauce and sriracha sauce. 2. Roll out the dough and cut into circles for dumpling wrappers. 3. Place a spoonful of filling in the center of each wrapper. 4. Fold the wrapper in half and seal the edges by crimping or pleating. 5. Steam the dumplings in a bamboo steamer for about 10-12 minutes until cooked through. 6. Serve hot with soy sauce for dipping.",
+    "cuisine": "Asian",
+    "difficulty": "Medium",
+    "image": "https://tse4.mm.bing.net/th?id=OIP.DdhmEKlsIftA5Yfr8NtikQHaE8&pid=Api&P=0&h=180",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 3,
+    "type": "Non-Vegetarian"
   },
-  "name": "Beef Bulgogi",
-  "ingredients": [
-    "Beef Sirloin",
-    "Soy Sauce",
-    "Sesame Oil",
-    "Sugar",
-    "Garlic",
-    "Ginger",
-    "Green Onions",
-    "Sesame Seeds",
-    "Asian Pear",
-    "Rice",
-    "Lettuce Leaves"
-  ],
-  "instructions": "1. Thinly slice beef sirloin and place it in a bowl. 2. In a separate bowl, mix together soy sauce, sesame oil, sugar, minced garlic, grated ginger, chopped green onions, and sesame seeds to make the marinade. 3. Pour the marinade over the beef slices and mix well. 4. Cover and refrigerate for at least 1 hour, or overnight. 5. Heat a grill or skillet over high heat. 6. Cook the marinated beef slices until browned and cooked through. 7. Serve hot with rice and lettuce leaves for wrapping.",
-  "cuisine": "Asian",
-  "difficulty": "Medium",
-  "image": "https://tse4.mm.bing.net/th?id=OIP.NjWmVa6xrW_7v-ygd5WnAAHaHa&pid=Api&P=0&h=180",
-  "likes": 0,
-  "averageRating": 0,
-  "Rating": [],
-  "comments": [],
-  "__v": 0
-},
+  {
+    "_id": {
+      "$oid": "667fc8e9a64889129e60931d"
+    },
+    "name": "Beef Bulgogi",
+    "ingredients": [
+      "Beef Sirloin",
+      "Soy Sauce",
+      "Sesame Oil",
+      "Sugar",
+      "Garlic",
+      "Ginger",
+      "Green Onions",
+      "Sesame Seeds",
+      "Asian Pear",
+      "Rice",
+      "Lettuce Leaves"
+    ],
+    "instructions": "1. Thinly slice beef sirloin and place it in a bowl. 2. In a separate bowl, mix together soy sauce, sesame oil, sugar, minced garlic, grated ginger, chopped green onions, and sesame seeds to make the marinade. 3. Pour the marinade over the beef slices and mix well. 4. Cover and refrigerate for at least 1 hour, or overnight. 5. Heat a grill or skillet over high heat. 6. Cook the marinated beef slices until browned and cooked through. 7. Serve hot with rice and lettuce leaves for wrapping.",
+    "cuisine": "Asian",
+    "difficulty": "Medium",
+    "image": "https://tse4.mm.bing.net/th?id=OIP.NjWmVa6xrW_7v-ygd5WnAAHaHa&pid=Api&P=0&h=180",
+    "likes": 0,
+    "averageRating": 0,
+    "Rating": [],
+    "comments": [],
+    "__v": 0,
+    "type": "Non-Vegetarian"
+  }
+
+,
 {
   "_id": {
     "$oid": "667fc93ca64889129e609321"
@@ -269,7 +278,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -298,7 +308,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -322,7 +333,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -344,7 +356,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -375,7 +388,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -404,7 +418,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -431,7 +446,8 @@
     4
   ],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Diabetes"
 },
 {
   "_id": {
@@ -457,7 +473,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -482,7 +499,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -507,7 +525,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -532,7 +551,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -564,7 +584,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -597,7 +618,8 @@
     3
   ],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -632,7 +654,8 @@
     5
   ],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -664,7 +687,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -686,7 +710,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -708,7 +733,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -729,7 +755,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Dairy-Free"
 },
 {
   "_id": {
@@ -755,7 +782,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Gluten-Free"
 },
 {
   "_id": {
@@ -783,7 +811,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -809,7 +838,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -849,7 +879,8 @@
       }
     }
   ],
-  "__v": 1
+  "__v": 1,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -873,7 +904,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -899,7 +931,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Diabetes"
 },
 {
   "_id": {
@@ -940,7 +973,8 @@
       }
     }
   ],
-  "__v": 1
+  "__v": 1,
+  "type":"Diabetes"
 },
 {
   "_id": {
@@ -969,7 +1003,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -999,7 +1034,8 @@
     3
   ],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1019,7 +1055,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Nut-Free"
 },
 {
   "_id": {
@@ -1046,7 +1083,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1079,7 +1117,8 @@
     3
   ],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1107,6 +1146,7 @@
   "Rating": [],
   "comments": [],
   "__v": 0
+  ,"type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1131,7 +1171,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1159,7 +1200,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1194,7 +1236,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1224,7 +1267,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Vegan"
 },
 {
   "_id": {
@@ -1248,7 +1292,8 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 },
 {
   "_id": {
@@ -1280,5 +1325,6 @@
   "averageRating": 0,
   "Rating": [],
   "comments": [],
-  "__v": 0
+  "__v": 0,
+  "type":"Non-Vegetarian"
 }]

@@ -30,7 +30,7 @@ export default function Home() {
         <h2 className="text-center mb-4">ALL RECIPES</h2>
         <div className="d-flex flex-wrap justify-content-around">
           {recipes.map((recipe, index) => (
-            <Link key={index} className="nav-link" to={`/recipe/${recipe._id}`}>
+            <Link key={index} className="nav-link" to={`login`}>
               <div className="grid-item mb-3" style={{ width: "236px", height: "375px" ,borderRadius:'0'}}>
               <RecipeCard recipename={recipe.name} description={`Let's make amazing ${recipe.name}`} averageRating={recipe.averageRating} image={recipe.image}/>
               </div>

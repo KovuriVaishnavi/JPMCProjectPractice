@@ -114,6 +114,16 @@ function UserPreferences() {
       })
       .then(response => {
         console.log('Preferences updated:', response.data);
+
+      
+        const updatedUser = {
+          ...user,
+          preferences: {
+            dietraryRestrictions: updatedDiets.map(selected => selected.name),
+            favouriteCuisines: updatedCuisines.map(selected => selected.name)
+          }
+        };
+        localStorage.setItem('user', JSON.stringify(updatedUser));
       })
       .catch(error => {
         console.error('Error updating preferences:', error);
